@@ -38,7 +38,7 @@ const navigation = [
   { name: "Usage", href: "#", icon: ChartBarSquareIcon, current: false },
   { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
 ];
-const teams = [
+const threads = [
   { id: 1, name: "Planetaria", href: "#", initial: "P", current: false },
   { id: 2, name: "Protocol", href: "#", initial: "P", current: false },
   { id: 3, name: "Tailwind Labs", href: "#", initial: "T", current: false },
@@ -49,8 +49,8 @@ const statuses = {
   error: "text-rose-400 bg-rose-400/10",
 };
 const environments = {
-  Preview: "text-gray-400 bg-gray-400/10 ring-gray-400/20",
-  Production: "text-indigo-400 bg-indigo-400/10 ring-indigo-400/30",
+  Active: "text-gray-400 bg-gray-400/10 ring-gray-400/20",
+  Closed: "text-indigo-400 bg-indigo-400/10 ring-indigo-400/30",
 };
 
 type commentOverview = {
@@ -58,62 +58,62 @@ type commentOverview = {
   href: string;
   category: string;
   name: string;
-  status: string;
+  status: "offline" | "online" | "error";
   dateCreated: Date;
   description: string;
-  environment: string;
+  environment: "Active" | "Closed";
 };
 
-const deployments = [
+const deployments: commentOverview[] = [
   {
     id: 1,
-    href: "#",
+    href: "/",
     category: "ios-app",
     name: "Planetaria",
     status: "offline",
-    dateCreated: "Created Dec 23 2020",
+    dateCreated: new Date(),
     description: "Last Activity 3 mins ago",
-    environment: "Preview",
+    environment: "Active",
   },
   {
     id: 2,
-    href: "#",
+    href: "/",
     category: "Work",
     name: "Planetaria",
     status: "online",
-    dateCreated: "Initiated 1m 32s ago",
+    dateCreated: new Date(),
     description: "Deploys from GitHub",
-    environment: "Preview",
+    environment: "Active",
   },
   {
     id: 3,
-    href: "#",
+    href: "/",
     category: "ios-app",
     name: "Planetaria",
-    status: "online",
-    dateCreated: "Initiated 1m 32s ago",
+    status: "error",
+    dateCreated: new Date(),
     description: "Deploys from GitHub",
-    environment: "Preview",
+    environment: "Active",
   },
   {
     id: 4,
-    href: "#",
+    href: "/",
     category: "ios-app",
     name: "Planetaria",
     status: "online",
-    dateCreated: "Initiated 1m 32s ago",
+    dateCreated: new Date(),
     description: "Deploys from GitHub",
-    environment: "Preview",
+    environment: "Active",
   },
   {
     id: 5,
-    href: "#",
+    href: "/",
     category: "ios-app",
     name: "Planetaria",
     status: "online",
-    dateCreated: "Initiated 1m 32s ago",
+    dateCreated: new Date(),
     description: "Deploys from GitHub",
-    environment: "Preview",
+    environment: "Closed",
   },
   // More deployments...
 ];
@@ -239,10 +239,10 @@ export default function Example() {
                         </li>
                         <li>
                           <div className="text-xs font-semibold leading-6 text-gray-400">
-                            Your teams
+                            Your threads
                           </div>
                           <ul role="list" className="-mx-2 mt-2 space-y-1">
-                            {teams.map((team) => (
+                            {threads.map((team) => (
                               <li key={team.name}>
                                 <a
                                   href={team.href}
@@ -323,10 +323,10 @@ export default function Example() {
                 </li>
                 <li>
                   <div className="text-xs font-semibold leading-6 text-gray-400">
-                    Your teams
+                    Your threads
                   </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
-                    {teams.map((team) => (
+                    {threads.map((team) => (
                       <li key={team.name}>
                         <a
                           href={team.href}
@@ -505,7 +505,11 @@ export default function Example() {
                         <circle cx={1} cy={1} r={1} />
                       </svg>
                       <p className="whitespace-nowrap">
-                        {deployment.dateCreated}
+                        {deployment.dateCreated.toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
                       </p>
                     </div>
                   </div>
