@@ -39,9 +39,9 @@ const navigation = [
   { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
 ];
 const threads = [
-  { id: 1, name: "Planetaria", href: "#", initial: "P", current: false },
-  { id: 2, name: "Protocol", href: "#", initial: "P", current: false },
-  { id: 3, name: "Tailwind Labs", href: "#", initial: "T", current: false },
+  { id: 1, name: "Planetaria", href: "#", current: false },
+  { id: 2, name: "Protocol", href: "#", current: false },
+  { id: 3, name: "Tailwind Labs", href: "#", current: false },
 ];
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
@@ -254,7 +254,7 @@ export default function Example() {
                                   )}
                                 >
                                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
-                                    {team.initial}
+                                    {team.name.charAt(0)}
                                   </span>
                                   <span className="truncate">{team.name}</span>
                                 </a>
