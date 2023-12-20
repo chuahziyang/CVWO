@@ -122,8 +122,7 @@ export default function Example() {
 
   return (
     <>
-      <div>
-        {/* <Transition.Root show={sidebarOpen} as={Fragment}>
+      {/* <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
             className="relative z-50 xl:hidden"
@@ -256,9 +255,8 @@ export default function Example() {
           </Dialog>
         </Transition.Root> */}
 
-        <Shell></Shell>
-
-        <div className="xl:pl-72">
+      <Shell>
+        <div>
           {/* Sticky search header */}
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 shadow-sm sm:px-6 lg:px-8">
             <button
@@ -468,7 +466,7 @@ export default function Example() {
             </ul>
           </aside> */}
         </div>
-      </div>
+      </Shell>
     </>
   );
 }
