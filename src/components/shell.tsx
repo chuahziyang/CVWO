@@ -1,3 +1,15 @@
+import {
+  ChartBarSquareIcon,
+  Cog6ToothIcon,
+  FolderIcon,
+  GlobeAltIcon,
+  ServerIcon,
+  SignalIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+
+import * as React from "react";
+
 const navigation = [
   { name: "Projects", href: "#", icon: FolderIcon, current: false },
   { name: "Deployments", href: "#", icon: ServerIcon, current: true },
@@ -12,16 +24,6 @@ const threads = [
   { id: 2, name: "Protocol", href: "#", current: false },
   { id: 3, name: "Tailwind Labs", href: "#", current: false },
 ];
-
-import {
-  ChartBarSquareIcon,
-  Cog6ToothIcon,
-  FolderIcon,
-  GlobeAltIcon,
-  ServerIcon,
-  SignalIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
 
 //@ts-ignore
 function classNames(...classes) {
