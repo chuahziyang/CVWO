@@ -7,4 +7,9 @@ import generouted from "@generouted/react-router/plugin";
 export default defineConfig({
   plugins: [react(), generouted()],
   resolve: { alias: { "@": "/src" } },
+  build: {
+    rollupOptions: {
+      external: ["react", "react-router", "react-router-dom"],
+    },
+  },
 });
