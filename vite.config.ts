@@ -6,4 +6,5 @@ import Generouted from "@generouted/react-router/plugin";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), Generouted()],
+  resolve: { alias: { "@": "/src" } },
 });
