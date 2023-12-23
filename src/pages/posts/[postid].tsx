@@ -12,9 +12,10 @@
   }
   ```
 */
+import { useParams } from "react-router-dom";
 import { Fragment, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import Shell from "../components/shell";
+import Shell from "../../components/shell";
 import {
   FaceFrownIcon,
   FaceSmileIcon,
@@ -127,12 +128,15 @@ function classNames(...classes) {
 
 export default function Example() {
   const [selected, setSelected] = useState(moods[5]);
+  const { postid } = useParams();
+  console.log(postid);
 
   return (
     <>
       <Shell>
         <div>
           <ul role="list" className="space-y-6">
+            {postid}
             {activity.map((activityItem, activityItemIdx) => (
               <li key={activityItem.id} className="relative flex gap-x-4">
                 <div
