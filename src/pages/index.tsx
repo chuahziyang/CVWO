@@ -14,7 +14,7 @@
 */
 import Shell from "../components/shell";
 import { Fragment, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   ChevronRightIcon,
@@ -118,6 +118,7 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  //@ts-ignore
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

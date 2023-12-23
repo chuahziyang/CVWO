@@ -5,7 +5,6 @@ import {
   GlobeAltIcon,
   ServerIcon,
   SignalIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 import * as React from "react";
@@ -29,7 +28,7 @@ const threads = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-const Shell = ({ children }) => {
+const Shell = ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
