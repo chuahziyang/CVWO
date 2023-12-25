@@ -21,6 +21,8 @@ import {
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
+import { Categories } from "../types/posts";
+import { postOverview } from "../types/posts";
 
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
@@ -32,23 +34,11 @@ const environments = {
   Closed: "text-indigo-400 bg-indigo-400/10 ring-indigo-400/30",
 };
 
-type commentOverview = {
-  id: number;
-  href: string;
-  category: string;
-  name: string;
-  status: "offline" | "online" | "error";
-  dateCreated: Date;
-  description: string;
-  environment: "Active" | "Closed";
-};
-
-const deployments: commentOverview[] = [
+const posts: postOverview[] = [
   {
     id: 1,
-    href: "/",
-    category: "ios-app",
-    name: "Planetaria",
+    category: Categories.Entertainment,
+    name: "Adam",
     status: "offline",
     dateCreated: new Date(),
     description: "Last Activity 3 mins ago",
@@ -56,9 +46,8 @@ const deployments: commentOverview[] = [
   },
   {
     id: 2,
-    href: "/",
-    category: "Work",
-    name: "Planetaria",
+    category: Categories.Sports,
+    name: "Eve",
     status: "online",
     dateCreated: new Date(),
     description: "Deploys from GitHub",
@@ -66,9 +55,8 @@ const deployments: commentOverview[] = [
   },
   {
     id: 3,
-    href: "/",
-    category: "ios-app",
-    name: "Planetaria",
+    category: Categories.Politics,
+    name: "Green",
     status: "error",
     dateCreated: new Date(),
     description: "Deploys from GitHub",
@@ -76,8 +64,7 @@ const deployments: commentOverview[] = [
   },
   {
     id: 4,
-    href: "/",
-    category: "ios-app",
+    category: Categories.Entertainment,
     name: "Planetaria",
     status: "online",
     dateCreated: new Date(),
@@ -86,15 +73,14 @@ const deployments: commentOverview[] = [
   },
   {
     id: 5,
-    href: "/",
-    category: "ios-app",
-    name: "Planetaria",
+    category: Categories.Music,
+    name: "test",
     status: "online",
     dateCreated: new Date(),
     description: "Deploys from GitHub",
     environment: "Closed",
   },
-  // More deployments...
+  // More posts...
 ];
 // const activityItems = [
 //   {
@@ -120,6 +106,8 @@ function classNames(...classes) {
 export default function Example() {
   //@ts-ignore
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <>
@@ -280,6 +268,8 @@ export default function Example() {
                     aria-hidden="true"
                   />
                   <input
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     id="search-field"
                     className="block h-full w-full border-0 bg-transparent py-0 pl-8 pr-0 text-white focus:ring-0 sm:text-sm"
                     placeholder="Search..."
@@ -296,6 +286,8 @@ export default function Example() {
               <h1 className="text-base font-semibold leading-7 text-white">
                 Threads
               </h1>
+
+              {searchTerm}
 
               {/* Sort dropdown */}
               <Menu as="div" className="relative">
@@ -360,65 +352,81 @@ export default function Example() {
               </Menu>
             </header>
 
-            {/* Deployment list */}
+            {/* post list */}
             <ul role="list" className="divide-y divide-white/5">
-              {deployments.map((deployment) => (
-                <li
-                  key={deployment.id}
-                  className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
-                >
-                  <div className="min-w-0 flex-auto">
-                    <div className="flex items-center gap-x-3">
-                      <div
-                        className={classNames(
-                          statuses[deployment.status],
-                          "flex-none rounded-full p-1"
-                        )}
-                      >
-                        <div className="h-2 w-2 rounded-full bg-current" />
-                      </div>
-                      <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
-                        <a href={deployment.href} className="flex gap-x-2">
-                          <span className="truncate">{deployment.name}</span>
-                          <span className="text-gray-400">/</span>
-                          <span className="whitespace-nowrap">
-                            {deployment.category}
-                          </span>
-                          <span className="absolute inset-0" />
-                        </a>
-                      </h2>
-                    </div>
-                    <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
-                      <p className="truncate">{deployment.description}</p>
-                      <svg
-                        viewBox="0 0 2 2"
-                        className="h-0.5 w-0.5 flex-none fill-gray-300"
-                      >
-                        <circle cx={1} cy={1} r={1} />
-                      </svg>
-                      <p className="whitespace-nowrap">
-                        {deployment.dateCreated.toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className={classNames(
-                      environments[deployment.environment],
-                      "rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset"
-                    )}
+              {posts
+                .filter(
+                  (post) =>
+                    post.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                    post.category
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                    post.environment
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                )
+                .map((post) => (
+                  <li
+                    key={post.id}
+                    className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
                   >
-                    {deployment.environment}
-                  </div>
-                  <ChevronRightIcon
-                    className="h-5 w-5 flex-none text-gray-400"
-                    aria-hidden="true"
-                  />
-                </li>
-              ))}
+                    <div className="min-w-0 flex-auto">
+                      <div className="flex items-center gap-x-3">
+                        <div
+                          className={classNames(
+                            statuses[post.status],
+                            "flex-none rounded-full p-1"
+                          )}
+                        >
+                          <div className="h-2 w-2 rounded-full bg-current" />
+                        </div>
+                        <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
+                          <a
+                            href={`/posts/${post.id}`}
+                            className="flex gap-x-2"
+                          >
+                            <span className="truncate">{post.name}</span>
+                            <span className="text-gray-400">/</span>
+                            <span className="whitespace-nowrap">
+                              {post.category}
+                            </span>
+                            <span className="absolute inset-0" />
+                          </a>
+                        </h2>
+                      </div>
+                      <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
+                        <p className="truncate">{post.description}</p>
+                        <svg
+                          viewBox="0 0 2 2"
+                          className="h-0.5 w-0.5 flex-none fill-gray-300"
+                        >
+                          <circle cx={1} cy={1} r={1} />
+                        </svg>
+                        <p className="whitespace-nowrap">
+                          {post.dateCreated.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      className={classNames(
+                        environments[post.environment],
+                        "rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset"
+                      )}
+                    >
+                      {post.environment}
+                    </div>
+                    <ChevronRightIcon
+                      className="h-5 w-5 flex-none text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </li>
+                ))}
             </ul>
           </main>
 

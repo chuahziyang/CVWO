@@ -95,7 +95,7 @@ export default function Example() {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-400">
+          {/* <p className="mt-10 text-center text-sm text-gray-400">
             Not a member?{" "}
             <a
               href="#"
@@ -103,7 +103,7 @@ export default function Example() {
             >
               Start a 14 day free trial
             </a>
-          </p>
+          </p> */}
         </div>
       </div>
     </>
