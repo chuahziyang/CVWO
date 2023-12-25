@@ -12,3 +12,6 @@
 require 'date'
 
 User.create(name:"Chuah Zi Yang", email:"czyang2002@gmail.com", created_at: DateTime.now)
+
+
+Post.create(name:"Chuah Zi Yang", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active")
