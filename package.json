@@ -1,0 +1,13 @@
+{
+  "name": "cvwo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "cdev": "cd frontend/ && npm run dev"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
