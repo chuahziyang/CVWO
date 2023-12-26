@@ -13,7 +13,7 @@
   ```
 */
 import Shell from "../components/shell";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -34,54 +34,6 @@ const environments = {
   Closed: "text-indigo-400 bg-indigo-400/10 ring-indigo-400/30",
 };
 
-const posts: postOverview[] = [
-  {
-    id: 1,
-    category: Categories.Entertainment,
-    name: "Adam",
-    status: "offline",
-    dateCreated: new Date(),
-    description: "Last Activity 3 mins ago",
-    environment: "Active",
-  },
-  {
-    id: 2,
-    category: Categories.Sports,
-    name: "Eve",
-    status: "online",
-    dateCreated: new Date(),
-    description: "Deploys from GitHub",
-    environment: "Active",
-  },
-  {
-    id: 3,
-    category: Categories.Politics,
-    name: "Green",
-    status: "error",
-    dateCreated: new Date(),
-    description: "Deploys from GitHub",
-    environment: "Active",
-  },
-  {
-    id: 4,
-    category: Categories.Entertainment,
-    name: "Planetaria",
-    status: "online",
-    dateCreated: new Date(),
-    description: "Deploys from GitHub",
-    environment: "Active",
-  },
-  {
-    id: 5,
-    category: Categories.Music,
-    name: "test",
-    status: "online",
-    dateCreated: new Date(),
-    description: "Deploys from GitHub",
-    environment: "Closed",
-  },
-  // More posts...
-];
 // const activityItems = [
 //   {
 //     user: {
@@ -108,6 +60,23 @@ export default function Example() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [posts, setPosts] = useState<postOverview[]>([]);
+
+  //get data from api
+  useEffect(() => {
+    fetch("http://localhost:3000/posts")
+      .then((response) => response.json())
+      .then((data) =>
+        // setPosts({ ...data, created_at: new Date(data.created_at) })
+        setPosts(
+          data.map((post) => ({
+            ...post,
+            created_at: new Date(post.created_at),
+          }))
+        )
+      );
+  }, []);
 
   return (
     <>
@@ -405,7 +374,7 @@ export default function Example() {
                           <circle cx={1} cy={1} r={1} />
                         </svg>
                         <p className="whitespace-nowrap">
-                          {post.dateCreated.toLocaleDateString("en-US", {
+                          {post.created_at.toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "short",
                             day: "numeric",
