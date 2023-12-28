@@ -256,8 +256,6 @@ export default function Example() {
                 Threads
               </h1>
 
-              {searchTerm}
-
               {/* Sort dropdown */}
               <Menu as="div" className="relative">
                 <Menu.Button className="flex items-center gap-x-1 text-sm font-medium leading-6 text-white">
