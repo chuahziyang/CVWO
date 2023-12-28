@@ -22,7 +22,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import { postOverview } from "../types/posts";
-import axios from "axios";
+import axios from "../utils/axios";
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
   online: "text-green-400 bg-green-400/10",
@@ -65,7 +65,7 @@ export default function Example() {
   //get data from api
   useEffect(() => {
     axios
-      .get("http://localhost:3000/posts")
+      .get("/posts")
       .then((response) => response.data)
       .then((data) =>
         // setPosts({ ...data, created_at: new Date(data.created_at) })
