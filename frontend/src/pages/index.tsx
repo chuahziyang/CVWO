@@ -26,13 +26,6 @@ import { Dialog } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Listbox } from "@headlessui/react";
 
-const categories = Object.values(Categories).map((category, index) => ({
-  id: index + 1,
-  name: category,
-}));
-
-console.log(categories);
-
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
   online: "text-green-400 bg-green-400/10",
@@ -73,6 +66,22 @@ export default function Example() {
   const [posts, setPosts] = useState<postOverview[]>([]);
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const [categories, setCategories] = useState(
+    Object.values(Categories).map((category, index) => ({
+      id: index + 1,
+      name: category,
+      value: true,
+    }))
+  );
+
+  const tick = (id: number) => {
+    setCategories(
+      categories.map((category) =>
+        category.id === id ? { ...category, value: !category.value } : category
+      )
+    );
+  };
 
   // console.log(categories2);
 
@@ -269,7 +278,6 @@ export default function Example() {
               <h1 className="text-base font-semibold leading-7 text-white">
                 Threads
               </h1>
-
               {/* Sort dropdown */}
               <Dialog
                 open={isOpen}
@@ -300,6 +308,8 @@ export default function Example() {
                               <input
                                 id={`person-${person.id}`}
                                 name={`person-${person.id}`}
+                                checked={person.value}
+                                onClick={() => tick(person.id)}
                                 type="checkbox"
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                               />
@@ -417,6 +427,12 @@ export default function Example() {
                       .toLowerCase()
                       .includes(searchTerm.toLowerCase())
                 )
+                .filter((post) => {
+                  return categories
+                    .filter((category) => category.value)
+                    .map((category) => category.name)
+                    .includes(post.category);
+                })
                 .map((post) => (
                   <li
                     key={post.id}
