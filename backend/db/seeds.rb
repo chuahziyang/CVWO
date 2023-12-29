@@ -14,4 +14,8 @@ require 'date'
 User.create(name:"Chuah Zi Yang", email:"czyang2002@gmail.com", created_at: DateTime.now)
 
 
-Post.create(name:"Chuah Zi Yang", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active")
+Post.create(name:"Calories", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active")
+Post.create(name:"Ice Cream", category:"Events", status:"online", description:"This is a test post", created_at: DateTime.now, environment:"Active")
+Post.create(name:"Pizza", category:"Technology", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active")
+Post.create(name:"Niqqis", category:"Music", status:"online", description:"This is a test post", created_at: DateTime.now, environment:"Closed")
+Post.create(name:"Al Amman", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active")
