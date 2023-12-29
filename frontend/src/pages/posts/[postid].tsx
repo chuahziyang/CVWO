@@ -16,6 +16,9 @@ import { useParams } from "react-router-dom";
 import { Fragment, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import Shell from "../../components/shell";
+import axios from "../../utils/axios";
+import Postarea from "../../components/postarea";
+import { useEffect } from "react";
 import {
   FaceFrownIcon,
   FaceSmileIcon,
@@ -129,12 +132,22 @@ function classNames(...classes) {
 export default function Example() {
   const [selected, setSelected] = useState(moods[5]);
   const { postid } = useParams();
+
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`/posts/${postid}`)
+      .then((response) => response.data)
+      .then((data) => setContent(data.content));
+  }, []);
   console.log(postid);
 
   return (
     <>
       <Shell>
         <div>
+          <Postarea content={content}></Postarea>
           <ul role="list" className="space-y-6">
             {postid}
             {activity.map((activityItem, activityItemIdx) => (
