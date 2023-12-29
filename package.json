@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "sdev": "cd frontend/ && npm run dev",
-    "cdev": "cd backend/ && rails server"
+    "cdev": "cd frontend/ && npm run dev",
+    "sdev": "cd backend/ && rails server",
+    "dev": "concurrently \"npm run cdev\" \"npm run sdev\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
