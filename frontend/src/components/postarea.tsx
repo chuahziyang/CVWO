@@ -12,7 +12,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({ content }) {
+export default function Example({ content }: { content: string }) {
   return (
     <div className="bg-gray-900 px-4 py-5 sm:px-6">
       <div className="flex space-x-3">

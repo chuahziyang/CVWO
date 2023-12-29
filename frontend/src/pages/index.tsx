@@ -13,8 +13,7 @@
   ```
 */
 import Shell from "../components/shell";
-import { Fragment, useEffect, useState } from "react";
-import { Menu, Transition } from "@headlessui/react";
+import { useEffect, useState } from "react";
 import {
   Bars3Icon,
   ChevronRightIcon,
@@ -23,8 +22,7 @@ import {
 import { postOverview, Categories } from "../types/posts";
 import axios from "../utils/axios";
 import { Dialog } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { Listbox } from "@headlessui/react";
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
