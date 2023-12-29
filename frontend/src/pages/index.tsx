@@ -18,11 +18,21 @@ import { Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   ChevronRightIcon,
-  ChevronUpDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { postOverview } from "../types/posts";
+import { postOverview, Categories } from "../types/posts";
 import axios from "../utils/axios";
+import { Dialog } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { Listbox } from "@headlessui/react";
+
+const categories = Object.values(Categories).map((category, index) => ({
+  id: index + 1,
+  name: category,
+}));
+
+console.log(categories);
+
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
   online: "text-green-400 bg-green-400/10",
@@ -62,6 +72,10 @@ export default function Example() {
 
   const [posts, setPosts] = useState<postOverview[]>([]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  // console.log(categories2);
+
   //get data from api
   useEffect(() => {
     axios
@@ -70,7 +84,7 @@ export default function Example() {
       .then((data) =>
         // setPosts({ ...data, created_at: new Date(data.created_at) })
         setPosts(
-          data.map((post) => ({
+          data.map((post: any) => ({
             ...post,
             created_at: new Date(post.created_at),
           }))
@@ -257,7 +271,58 @@ export default function Example() {
               </h1>
 
               {/* Sort dropdown */}
-              <Menu as="div" className="relative">
+              <Dialog
+                open={isOpen}
+                onClose={() => setIsOpen(false)}
+                className="relative z-50"
+              >
+                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                  <Dialog.Panel className="w-full max-w-sm rounded bg-white">
+                    <fieldset className="m-8">
+                      <legend className="text-base font-semibold leading-6 text-gray-900">
+                        Topics
+                      </legend>
+                      <div className="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                        {categories.map((person, personIdx) => (
+                          <div
+                            key={personIdx}
+                            className="relative flex items-start py-4"
+                          >
+                            <div className="min-w-0 flex-1 text-sm leading-6">
+                              <label
+                                htmlFor={`person-${person.id}`}
+                                className="select-none font-medium text-gray-900"
+                              >
+                                {person.name}
+                              </label>
+                            </div>
+                            <div className="ml-3 flex h-6 items-center">
+                              <input
+                                id={`person-${person.id}`}
+                                name={`person-${person.id}`}
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </fieldset>
+                  </Dialog.Panel>
+                </div>
+              </Dialog>
+
+              <button
+                onClick={() => setIsOpen(true)}
+                className="flex items-center gap-x-1 text-sm font-medium leading-6 text-white"
+              >
+                Sort by
+                <ChevronUpDownIcon
+                  className="h-5 w-5 text-gray-500"
+                  aria-hidden="true"
+                />
+              </button>
+              {/* <Menu as="div" className="relative">
                 <Menu.Button className="flex items-center gap-x-1 text-sm font-medium leading-6 text-white">
                   Sort by
                   <ChevronUpDownIcon
@@ -274,49 +339,67 @@ export default function Example() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2.5 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active ? "bg-gray-50" : "",
-                            "block px-3 py-1 text-sm leading-6 text-gray-900"
-                          )}
+                  <Listbox>
+                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {people.map((person) => (
+                        <Listbox.Option
+                          key={person.id}
+                          className={({ active }) =>
+                            classNames(
+                              active
+                                ? "bg-indigo-600 text-white"
+                                : "text-gray-900",
+                              "relative cursor-default select-none py-2 pl-3 pr-9"
+                            )
+                          }
+                          value={person}
                         >
-                          Name
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active ? "bg-gray-50" : "",
-                            "block px-3 py-1 text-sm leading-6 text-gray-900"
+                          {({ selected, active }) => (
+                            <>
+                              <div className="flex items-center">
+                                <span
+                                  className={classNames(
+                                    person.online
+                                      ? "bg-green-400"
+                                      : "bg-gray-200",
+                                    "inline-block h-2 w-2 flex-shrink-0 rounded-full"
+                                  )}
+                                  aria-hidden="true"
+                                />
+                                <span
+                                  className={classNames(
+                                    selected ? "font-semibold" : "font-normal",
+                                    "ml-3 block truncate"
+                                  )}
+                                >
+                                  {person.name}
+                                  <span className="sr-only">
+                                    {" "}
+                                    is {person.online ? "online" : "offline"}
+                                  </span>
+                                </span>
+                              </div>
+                              {selected ? (
+                                <span
+                                  className={classNames(
+                                    active ? "text-white" : "text-indigo-600",
+                                    "absolute inset-y-0 right-0 flex items-center pr-4"
+                                  )}
+                                >
+                                  <CheckIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
                           )}
-                        >
-                          Date updated
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active ? "bg-gray-50" : "",
-                            "block px-3 py-1 text-sm leading-6 text-gray-900"
-                          )}
-                        >
-                          Environment
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </Menu.Items>
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Listbox>
                 </Transition>
-              </Menu>
+              </Menu> */}
             </header>
 
             {/* post list */}
