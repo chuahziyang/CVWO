@@ -19,6 +19,7 @@ import Shell from "../../components/shell";
 import axios from "../../utils/axios";
 import Postarea from "../../components/postarea";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   FaceFrownIcon,
   FaceSmileIcon,
@@ -135,21 +136,19 @@ export default function Example() {
 
   const [content, setContent] = useState("");
 
-  useEffect(() => {
-    axios
-      .get(`/posts/${postid}`)
-      .then((response) => response.data)
-      .then((data) => setContent(data.content));
-  }, []);
-  console.log(postid);
+  const query = useQuery({
+    queryKey: ["post"],
+    queryFn: () => axios.get(`/posts/${postid}`).then((res) => res.data),
+  });
 
   return (
     <>
       <Shell>
         <div>
-          <Postarea content={content}></Postarea>
+          {query.isSuccess && (
+            <Postarea content={query.data.content}></Postarea>
+          )}
           <ul role="list" className="space-y-6">
-            {postid}
             {activity.map((activityItem, activityItemIdx) => (
               <li key={activityItem.id} className="relative flex gap-x-4">
                 <div
