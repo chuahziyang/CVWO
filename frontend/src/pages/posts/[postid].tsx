@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import { Fragment, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import Shell from "../../components/shell";
-import axios from "../../utils/axios";
+import axios from "../../server/axios";
 import Postarea from "../../components/postarea";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -30,6 +30,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { Listbox, Transition } from "@headlessui/react";
+import { getPost } from "../../server/posts";
 
 const activity = [
   {
@@ -132,13 +133,13 @@ function classNames(...classes) {
 
 export default function Example() {
   const [selected, setSelected] = useState(moods[5]);
-  const { postid } = useParams();
+  const { postid } = useParams() as { postid: string };
 
   const [content, setContent] = useState("");
 
   const query = useQuery({
     queryKey: ["post"],
-    queryFn: () => axios.get(`/posts/${postid}`).then((res) => res.data),
+    queryFn: getPost(postid),
   });
 
   return (

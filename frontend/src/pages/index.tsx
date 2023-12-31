@@ -12,6 +12,7 @@
   }
   ```
 */
+import { useQuery } from "@tanstack/react-query";
 import Shell from "../components/shell";
 import { useEffect, useState } from "react";
 import {
@@ -20,9 +21,10 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import { postOverview, Categories } from "../types/posts";
-import axios from "../utils/axios";
+import axios from "../server/axios";
 import { Dialog } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { getPosts } from "../server/posts";
 
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
@@ -83,21 +85,11 @@ export default function Example() {
 
   // console.log(categories2);
 
+  const query = useQuery({
+    queryKey: ["post"],
+    queryFn: getPosts(),
+  });
   //get data from api
-  useEffect(() => {
-    axios
-      .get("/posts")
-      .then((response) => response.data)
-      .then((data) =>
-        // setPosts({ ...data, created_at: new Date(data.created_at) })
-        setPosts(
-          data.map((post: any) => ({
-            ...post,
-            created_at: new Date(post.created_at),
-          }))
-        )
-      );
-  }, []);
 
   return (
     <>
@@ -412,9 +404,9 @@ export default function Example() {
 
             {/* post list */}
             <ul role="list" className="divide-y divide-white/5">
-              {posts
+              {query.data
                 .filter(
-                  (post) =>
+                  (post: postOverview) =>
                     post.name
                       .toLowerCase()
                       .includes(searchTerm.toLowerCase()) ||
@@ -425,13 +417,13 @@ export default function Example() {
                       .toLowerCase()
                       .includes(searchTerm.toLowerCase())
                 )
-                .filter((post) => {
+                .filter((post: postOverview) => {
                   return categories
                     .filter((category) => category.value)
                     .map((category) => category.name)
                     .includes(post.category);
                 })
-                .map((post) => (
+                .map((post: postOverview) => (
                   <li
                     key={post.id}
                     className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
