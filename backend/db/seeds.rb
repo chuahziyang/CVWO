@@ -11,11 +11,12 @@
 
 require 'date'
 
-User.create(name:"Chuah Zi Yang", email:"czyang2002@gmail.com", created_at: DateTime.now)
+user1 = User.create(name:"Chuah Zi Yang", email:"czyang2002@gmail.com", created_at: DateTime.now)
+user2 = User.create(name:"Sally", email:"testetst@gmail.com", created_at: DateTime.now)
 
 
-Post.create(name:"Calories", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active")
-Post.create(name:"Ice Cream", category:"Events", status:"online", description:"This is a test post", created_at: DateTime.now, environment:"Active")
-Post.create(name:"Pizza", category:"Technology", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active")
-Post.create(name:"Niqqis", category:"Music", status:"online", description:"This is a test post", created_at: DateTime.now, environment:"Closed")
-Post.create(name:"Al Amman", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active")
+Post.create(name:"Calories", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active", user:user1)
+Post.create(name:"Ice Cream", category:"Events", status:"online", description:"This is a test post", created_at: DateTime.now, environment:"Active",user:user1)
+Post.create(name:"Pizza", category:"Technology", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active",user:user1)
+Post.create(name:"Niqqis", category:"Music", status:"online", description:"This is a test post", created_at: DateTime.now, environment:"Closed",user:user2)
+Post.create(name:"Al Amman", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active",user:user2)
