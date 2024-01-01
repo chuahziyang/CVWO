@@ -9,6 +9,7 @@ import {
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import * as React from "react";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
 const navigation = [
   { name: "Projects", href: "#", icon: FolderIcon, current: false },
@@ -29,9 +30,7 @@ const threads = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-const Shell = ({ children }: any) => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
+const Shell = ({ children, isOpen, setSidebarOpen }: any) => {
   return (
     <>
       <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
@@ -113,7 +112,7 @@ const Shell = ({ children }: any) => {
         </div>
       </div>
 
-      <Transition.Root show={sidebarOpen} as={Fragment}>
+      <Transition.Root show={isOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-50 xl:hidden"
@@ -159,10 +158,10 @@ const Shell = ({ children }: any) => {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      {/* <XMarkIcon
+                      <XMarkIcon
                         className="h-6 w-6 text-white"
                         aria-hidden="true"
-                      /> */}
+                      />
                     </button>
                   </div>
                 </Transition.Child>
