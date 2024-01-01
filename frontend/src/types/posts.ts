@@ -20,4 +20,5 @@ export type postOverview = {
   description: string;
   environment: "Active" | "Closed";
   content: string;
+  user_id: number;
 };
