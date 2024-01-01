@@ -87,7 +87,7 @@ export default function Example() {
     queryFn: getPosts(),
   });
   //get data from api
-
+  const { data, error, isSuccess } = query;
   return (
     <>
       <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
@@ -271,7 +271,7 @@ export default function Example() {
               {query.isSuccess
                 ? query.data
                     .filter(
-                      (post: postOverview) =>
+                      (post) =>
                         post.name
                           .toLowerCase()
                           .includes(searchTerm.toLowerCase()) ||
@@ -282,13 +282,13 @@ export default function Example() {
                           .toLowerCase()
                           .includes(searchTerm.toLowerCase())
                     )
-                    .filter((post: postOverview) => {
+                    .filter((post) => {
                       return categories
                         .filter((category) => category.value)
                         .map((category) => category.name)
                         .includes(post.category);
                     })
-                    .map((post: postOverview) => (
+                    .map((post) => (
                       <li
                         key={post.id}
                         className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"

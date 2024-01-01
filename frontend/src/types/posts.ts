@@ -16,6 +16,8 @@ export type postOverview = {
   name: string;
   status: "offline" | "online" | "error";
   created_at: Date;
+  updated_at: Date;
   description: string;
   environment: "Active" | "Closed";
+  content: string;
 };
