@@ -6,7 +6,7 @@ export const getPosts = () => {
       .get("/posts")
       .then((res) => res.data)
       .then((data) => {
-        return data.map((post) => processPost(post)) as postOverview[];
+        return data.map((post: any) => processPost(post)) as postOverview[];
       });
 };
 
