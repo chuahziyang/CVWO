@@ -23,7 +23,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Shell from "../components/shell";
 import { getPosts } from "../server/posts";
-import { Categories, postOverview } from "../types/posts";
+import { Categories } from "../types/posts";
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
   online: "text-green-400 bg-green-400/10",
@@ -57,8 +57,6 @@ function classNames(...classes) {
 
 export default function Example() {
   const [searchTerm, setSearchTerm] = useState("");
-
-  const [posts, setPosts] = useState<postOverview[]>([]);
 
   const [isOpen, setIsOpen] = useState(false);
 
