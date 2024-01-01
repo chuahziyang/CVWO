@@ -20,7 +20,7 @@ export const getPost = (id: string) => {
       });
 };
 
-const processPost = (post) => {
+const processPost = (post: any) => {
   return {
     ...post,
     created_at: new Date(post.created_at),
