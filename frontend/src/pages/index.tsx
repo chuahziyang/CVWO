@@ -12,21 +12,18 @@
   }
   ```
 */
-import { useQuery } from "@tanstack/react-query";
-import Shell from "../components/shell";
-import { useEffect, useState } from "react";
+import { Dialog } from "@headlessui/react";
 import {
   Bars3Icon,
   ChevronRightIcon,
+  ChevronUpDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { postOverview, Categories } from "../types/posts";
-import axios from "../server/axios";
-import { Dialog } from "@headlessui/react";
-import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import Shell from "../components/shell";
 import { getPosts } from "../server/posts";
-import { Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Categories, postOverview } from "../types/posts";
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
   online: "text-green-400 bg-green-400/10",

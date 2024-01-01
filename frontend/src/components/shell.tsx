@@ -1,3 +1,5 @@
+import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import {
   ChartBarSquareIcon,
   Cog6ToothIcon,
@@ -6,10 +8,7 @@ import {
   ServerIcon,
   SignalIcon,
 } from "@heroicons/react/24/outline";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import * as React from "react";
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { Fragment } from "react";
 
 const navigation = [
   { name: "Projects", href: "#", icon: FolderIcon, current: false },
@@ -31,6 +30,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Shell = ({ children, isOpen, setSidebarOpen }: any) => {
+  console.log("isOpen", isOpen);
+  console.log("setSidebarOpen", setSidebarOpen);
   return (
     <>
       <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">

@@ -12,14 +12,7 @@
   }
   ```
 */
-import { useParams } from "react-router-dom";
-import { Fragment, useState } from "react";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import Shell from "../../components/shell";
-import axios from "../../server/axios";
-import Postarea from "../../components/postarea";
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { Listbox, Transition } from "@headlessui/react";
 import {
   FaceFrownIcon,
   FaceSmileIcon,
@@ -29,9 +22,13 @@ import {
   PaperClipIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import { Listbox, Transition } from "@headlessui/react";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { useQuery } from "@tanstack/react-query";
+import { Fragment, useState } from "react";
+import { useParams } from "react-router-dom";
+import Postarea from "../../components/postarea";
+import Shell from "../../components/shell";
 import { getPost } from "../../server/posts";
-
 const activity = [
   {
     id: 1,
@@ -132,10 +129,10 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const [selected, setSelected] = useState(moods[5]);
   const { postid } = useParams() as { postid: string };
-
-  const [content, setContent] = useState("");
 
   const query = useQuery({
     queryKey: ["post"],
@@ -144,7 +141,7 @@ export default function Example() {
 
   return (
     <>
-      <Shell>
+      <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
         <div>
           {query.isSuccess && (
             <Postarea content={query.data.content}></Postarea>
