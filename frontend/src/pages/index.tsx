@@ -87,7 +87,6 @@ export default function Example() {
     queryFn: getPosts(),
   });
   //get data from api
-  const { data, error, isSuccess } = query;
   return (
     <>
       <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
