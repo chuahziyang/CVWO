@@ -65,9 +65,7 @@ export default function Example() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggle = () => setSidebarOpen(!sidebarOpen);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [categories, setCategories] = useState(
     Object.values(Categories).map((category, index) => ({
@@ -273,7 +271,7 @@ export default function Example() {
 
             {/* post list */}
             <ul role="list" className="divide-y divide-white/5">
-              {query.data
+              {query.isSuccess
                 ? query.data
                     .filter(
                       (post: postOverview) =>
