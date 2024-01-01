@@ -25,7 +25,8 @@ import axios from "../server/axios";
 import { Dialog } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { getPosts } from "../server/posts";
-
+import { Transition } from "@headlessui/react";
+import { Fragment } from "react";
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
   online: "text-green-400 bg-green-400/10",
@@ -58,9 +59,6 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  //@ts-ignore
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
 
   const [posts, setPosts] = useState<postOverview[]>([]);
@@ -93,139 +91,6 @@ export default function Example() {
 
   return (
     <>
-      {/* <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="relative z-50 xl:hidden"
-            onClose={setSidebarOpen}
-          >
-            <Transition.Child
-              as={Fragment}
-              enter="transition-opacity ease-linear duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity ease-linear duration-300"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-gray-900/80" />
-            </Transition.Child>
-
-            <div className="fixed inset-0 flex">
-              <Transition.Child
-                as={Fragment}
-                enter="transition ease-in-out duration-300 transform"
-                enterFrom="-translate-x-full"
-                enterTo="translate-x-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="translate-x-0"
-                leaveTo="-translate-x-full"
-              >
-                <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-300"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
-                      <button
-                        type="button"
-                        className="-m-2.5 p-2.5"
-                        onClick={() => setSidebarOpen(false)}
-                      >
-                        <span className="sr-only">Close sidebar</span>
-                        <XMarkIcon
-                          className="h-6 w-6 text-white"
-                          aria-hidden="true"
-                        />
-                      </button>
-                    </div>
-                  </Transition.Child>
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 ring-1 ring-white/10">
-                    <div className="flex h-16 shrink-0 items-center">
-                      <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Your Company"
-                      />
-                    </div>
-                    <nav className="flex flex-1 flex-col">
-                      <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                        <li>
-                          <ul role="list" className="-mx-2 space-y-1">
-                            {navigation.map((item) => (
-                              <li key={item.name}>
-                                <a
-                                  href={item.href}
-                                  className={classNames(
-                                    item.current
-                                      ? "bg-gray-800 text-white"
-                                      : "text-gray-400 hover:text-white hover:bg-gray-800",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
-                                  )}
-                                >
-                                  <item.icon
-                                    className="h-6 w-6 shrink-0"
-                                    aria-hidden="true"
-                                  />
-                                  {item.name}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </li>
-                        <li>
-                          <div className="text-xs font-semibold leading-6 text-gray-400">
-                            Your threads
-                          </div>
-                          <ul role="list" className="-mx-2 mt-2 space-y-1">
-                            {threads.map((team) => (
-                              <li key={team.name}>
-                                <a
-                                  href={team.href}
-                                  className={classNames(
-                                    team.current
-                                      ? "bg-gray-800 text-white"
-                                      : "text-gray-400 hover:text-white hover:bg-gray-800",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
-                                  )}
-                                >
-                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
-                                    {team.name.charAt(0)}
-                                  </span>
-                                  <span className="truncate">{team.name}</span>
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </li>
-                        <li className="-mx-6 mt-auto">
-                          <a
-                            href="#"
-                            className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
-                          >
-                            <img
-                              className="h-8 w-8 rounded-full bg-gray-800"
-                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                              alt=""
-                            />
-                            <span className="sr-only">Your profile</span>
-                            <span aria-hidden="true">Tom Cook</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </Dialog>
-        </Transition.Root> */}
-
       <Shell>
         <div>
           {/* Sticky search header */}
@@ -233,7 +98,7 @@ export default function Example() {
             <button
               type="button"
               className="-m-2.5 p-2.5 text-white xl:hidden"
-              onClick={() => setSidebarOpen(true)}
+              // onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-5 w-5" aria-hidden="true" />
@@ -405,84 +270,86 @@ export default function Example() {
             {/* post list */}
             <ul role="list" className="divide-y divide-white/5">
               {query.data
-                .filter(
-                  (post: postOverview) =>
-                    post.name
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase()) ||
-                    post.category
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase()) ||
-                    post.environment
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase())
-                )
-                .filter((post: postOverview) => {
-                  return categories
-                    .filter((category) => category.value)
-                    .map((category) => category.name)
-                    .includes(post.category);
-                })
-                .map((post: postOverview) => (
-                  <li
-                    key={post.id}
-                    className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
-                  >
-                    <div className="min-w-0 flex-auto">
-                      <div className="flex items-center gap-x-3">
+                ? query.data
+                    .filter(
+                      (post: postOverview) =>
+                        post.name
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase()) ||
+                        post.category
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase()) ||
+                        post.environment
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase())
+                    )
+                    .filter((post: postOverview) => {
+                      return categories
+                        .filter((category) => category.value)
+                        .map((category) => category.name)
+                        .includes(post.category);
+                    })
+                    .map((post: postOverview) => (
+                      <li
+                        key={post.id}
+                        className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
+                      >
+                        <div className="min-w-0 flex-auto">
+                          <div className="flex items-center gap-x-3">
+                            <div
+                              className={classNames(
+                                statuses[post.status],
+                                "flex-none rounded-full p-1"
+                              )}
+                            >
+                              <div className="h-2 w-2 rounded-full bg-current" />
+                            </div>
+                            <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
+                              <a
+                                href={`/posts/${post.id}`}
+                                className="flex gap-x-2"
+                              >
+                                <span className="truncate">{post.name}</span>
+                                <span className="text-gray-400">/</span>
+                                <span className="whitespace-nowrap">
+                                  {post.category}
+                                </span>
+                                <span className="absolute inset-0" />
+                              </a>
+                            </h2>
+                          </div>
+                          <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
+                            <p className="truncate">{post.description}</p>
+                            <svg
+                              viewBox="0 0 2 2"
+                              className="h-0.5 w-0.5 flex-none fill-gray-300"
+                            >
+                              <circle cx={1} cy={1} r={1} />
+                            </svg>
+                            <p className="whitespace-nowrap">
+                              {post.created_at.toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </p>
+                          </div>
+                        </div>
                         <div
                           className={classNames(
-                            statuses[post.status],
-                            "flex-none rounded-full p-1"
+                            environments[post.environment],
+                            "rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset"
                           )}
                         >
-                          <div className="h-2 w-2 rounded-full bg-current" />
+                          {post.environment}
                         </div>
-                        <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
-                          <a
-                            href={`/posts/${post.id}`}
-                            className="flex gap-x-2"
-                          >
-                            <span className="truncate">{post.name}</span>
-                            <span className="text-gray-400">/</span>
-                            <span className="whitespace-nowrap">
-                              {post.category}
-                            </span>
-                            <span className="absolute inset-0" />
-                          </a>
-                        </h2>
-                      </div>
-                      <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
-                        <p className="truncate">{post.description}</p>
-                        <svg
-                          viewBox="0 0 2 2"
-                          className="h-0.5 w-0.5 flex-none fill-gray-300"
-                        >
-                          <circle cx={1} cy={1} r={1} />
-                        </svg>
-                        <p className="whitespace-nowrap">
-                          {post.created_at.toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className={classNames(
-                        environments[post.environment],
-                        "rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset"
-                      )}
-                    >
-                      {post.environment}
-                    </div>
-                    <ChevronRightIcon
-                      className="h-5 w-5 flex-none text-gray-400"
-                      aria-hidden="true"
-                    />
-                  </li>
-                ))}
+                        <ChevronRightIcon
+                          className="h-5 w-5 flex-none text-gray-400"
+                          aria-hidden="true"
+                        />
+                      </li>
+                    ))
+                : null}
             </ul>
           </main>
 
