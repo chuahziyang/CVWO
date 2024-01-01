@@ -21,4 +21,14 @@ export type postOverview = {
   environment: "Active" | "Closed";
   content: string;
   user_id: number;
+  user: User;
+};
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  created_at: Date;
+  updated_at: Date;
+  admin: boolean;
 };
