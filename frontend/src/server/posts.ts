@@ -6,12 +6,7 @@ export const getPosts = () => {
       .get("/posts")
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
-        return data.map((post: any) => ({
-          ...post,
-          created_at: new Date(post.created_at),
-          updated_at: new Date(post.created_at),
-        })) as postOverview[];
+        return data.map((post) => processPost(post)) as postOverview[];
       });
 };
 
@@ -21,11 +16,19 @@ export const getPost = (id: string) => {
       .get(`/posts/${id}`)
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
-        return {
-          ...data,
-          created_at: new Date(data.created_at),
-          updated_at: new Date(data.created_at),
-        } as postOverview;
+        return processPost(data) as postOverview;
       });
+};
+
+const processPost = (post) => {
+  return {
+    ...post,
+    created_at: new Date(post.created_at),
+    updated_at: new Date(post.created_at),
+    user: {
+      ...post.user,
+      created_at: new Date(post.user.created_at),
+      updated_at: new Date(post.user.updated_at),
+    },
+  };
 };
