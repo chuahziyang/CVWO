@@ -20,12 +20,6 @@ const navigation = [
   { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
 ];
 
-const threads = [
-  { id: 1, name: "Planetaria", href: "#", current: false },
-  { id: 2, name: "Protocol", href: "#", current: false },
-  { id: 3, name: "Tailwind Labs", href: "#", current: false },
-];
-
 //@ts-ignore
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
