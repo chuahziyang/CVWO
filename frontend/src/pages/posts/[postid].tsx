@@ -145,7 +145,11 @@ export default function Example() {
       <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
         <div>
           {query.isSuccess && (
-            <Postarea content={query.data.content}></Postarea>
+            <Postarea
+              content={query.data.content}
+              date={query.data.created_at}
+              author={query.data.user.name}
+            ></Postarea>
           )}
           <ul role="list" className="space-y-6">
             {activity.map((activityItem, activityItemIdx) => (

@@ -12,7 +12,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({ content }: { content: string }) {
+export default function Example({
+  content,
+  date,
+  author,
+}: {
+  content: string;
+  author: string;
+  date: Date;
+}) {
   console.log(content);
   return (
     <div className="bg-gray-900 px-4 py-5 sm:px-6">
@@ -27,12 +35,18 @@ export default function Example({ content }: { content: string }) {
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-gray-100">
             <a href="#" className="hover:underline">
-              Chelsea Hagon
+              {author}
             </a>
           </p>
           <p className="text-sm text-gray-500">
             <a href="#" className="hover:underline">
-              December 9 at 11:43 AM
+              {date.toLocaleString("en-US", {
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+              })}
             </a>
           </p>
           <p className="text-white">{content}</p>
