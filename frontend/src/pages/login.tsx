@@ -12,14 +12,24 @@
   }
   ```
 */
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { login } from "../server/auth";
 
 export default function Example() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+
   const submit = () => {
     console.log(email, password);
+    mutation.mutate({ email, password });
   };
 
   return (
@@ -32,6 +42,20 @@ export default function Example() {
         <body class="h-full">
         ```
       */}
+
+      {mutation.isError && (
+        <div className="rounded-md bg-red-100 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0"></div>
+            <div className="ml-3">
+              <p className="text-sm font-medium bg-red-100">
+                Your Credentials are invalid please try again
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -42,12 +66,10 @@ export default function Example() {
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
             Sign in to your account
           </h2>
-          {email}
-          {password}
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             <div>
               <label
                 htmlFor="email"
@@ -101,7 +123,6 @@ export default function Example() {
             <div>
               <button
                 onClick={submit}
-                type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
               >
                 Sign in
@@ -109,6 +130,8 @@ export default function Example() {
             </div>
           </form>
 
+          {mutation.isSuccess && JSON.stringify(mutation.data)}
+          {mutation.isError && "ASDASDASDASD"}
           {/* <p className="mt-10 text-center text-sm text-gray-400">
             Not a member?{" "}
             <a
