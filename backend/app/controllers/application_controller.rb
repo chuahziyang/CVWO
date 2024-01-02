@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include JwtToken
 
-  # before_action :authenticate_request
+  before_action :authenticate_request
 
   private
     def authenticate_user
