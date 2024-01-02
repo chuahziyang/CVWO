@@ -14,16 +14,20 @@
 */
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { login } from "../server/auth";
 
 export default function Example() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
       console.log(data);
+      navigate("/");
     },
   });
 
@@ -131,7 +135,6 @@ export default function Example() {
           </form>
 
           {mutation.isSuccess && JSON.stringify(mutation.data)}
-          {mutation.isError && "ASDASDASDASD"}
           {/* <p className="mt-10 text-center text-sm text-gray-400">
             Not a member?{" "}
             <a
