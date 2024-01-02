@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   CodeBracketIcon,
@@ -6,6 +5,7 @@ import {
   FlagIcon,
   StarIcon,
 } from "@heroicons/react/20/solid";
+import { Fragment } from "react";
 
 //@ts-ignore
 function classNames(...classes) {
@@ -13,6 +13,7 @@ function classNames(...classes) {
 }
 
 export default function Example({ content }: { content: string }) {
+  console.log(content);
   return (
     <div className="bg-gray-900 px-4 py-5 sm:px-6">
       <div className="flex space-x-3">

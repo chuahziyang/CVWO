@@ -103,7 +103,7 @@ export default Shell;
 
 function newFunction(background: boolean) {
   const query = useQuery({
-    queryKey: ["post"],
+    queryKey: ["myposts"],
     queryFn: getPosts(),
   });
 

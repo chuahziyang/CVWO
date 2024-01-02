@@ -81,7 +81,7 @@ export default function Example() {
   // console.log(categories2);
 
   const query = useQuery({
-    queryKey: ["post"],
+    queryKey: ["posts"],
     queryFn: getPosts(),
   });
   //get data from api
