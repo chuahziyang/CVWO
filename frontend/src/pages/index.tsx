@@ -21,9 +21,11 @@ import {
 } from "@heroicons/react/20/solid";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useAuthHeader, useIsAuthenticated } from "react-auth-kit";
 import Shell from "../components/shell";
 import { getPosts } from "../server/posts";
 import { Categories } from "../types/posts";
+
 const statuses = {
   offline: "text-gray-500 bg-gray-100/10",
   online: "text-green-400 bg-green-400/10",
@@ -57,6 +59,14 @@ function classNames(...classes) {
 
 export default function Example() {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const authHeader = useAuthHeader();
+
+  console.log(authHeader());
+
+  const isAuthenticated = useIsAuthenticated();
+
+  console.log(isAuthenticated());
 
   const [isOpen, setIsOpen] = useState(false);
 

@@ -6,7 +6,7 @@ export const login = ({
 }: {
   email: string;
   password: string;
-}): Promise<string> => {
+}) => {
   return axios
     .post("/auth/login", {
       email,
@@ -15,6 +15,6 @@ export const login = ({
     .then((res) => res.data)
     .then((data) => {
       console.log(data);
-      return data;
+      return { ...data, tokenType: "Bearer", expiresIn: 3600 };
     });
 };
