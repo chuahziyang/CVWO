@@ -12,7 +12,6 @@
   }
   ```
 */
-import { Dialog } from "@headlessui/react";
 import {
   Bars3Icon,
   ChevronRightIcon,
@@ -20,8 +19,9 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuthHeader, useIsAuthenticated } from "react-auth-kit";
+import { Modal } from "../components/modal";
 import Shell from "../components/shell";
 import { getPosts } from "../server/posts";
 import { Categories } from "../types/posts";
@@ -59,6 +59,7 @@ function classNames(...classes) {
 
 export default function Example() {
   const [searchTerm, setSearchTerm] = useState("");
+  const cancelButtonRef = useRef(null);
 
   const authHeader = useAuthHeader();
 
@@ -69,6 +70,8 @@ export default function Example() {
   console.log(isAuthenticated());
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const [isnewpostOpen, setIsnewpostOpen] = useState(false);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -99,6 +102,117 @@ export default function Example() {
     <>
       <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
         <div>
+          {/* Sort By Modal*/}
+          <Modal open={isOpen} setOpen={setIsOpen}>
+            <fieldset className="m-8">
+              <legend className="text-base font-semibold leading-6 text-white">
+                Topics
+              </legend>
+              <div className="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+                {categories.map((person, personIdx) => (
+                  <div
+                    key={personIdx}
+                    className="relative flex items-start py-4"
+                  >
+                    <div className="min-w-0 flex-1 text-sm leading-6">
+                      <label
+                        htmlFor={`person-${person.id}`}
+                        className="select-none font-medium text-white"
+                      >
+                        {person.name}
+                      </label>
+                    </div>
+                    <div className="ml-3 flex h-6 items-center">
+                      <input
+                        id={`person-${person.id}`}
+                        name={`person-${person.id}`}
+                        checked={person.value}
+                        onClick={() => tick(person.id)}
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </fieldset>
+          </Modal>
+
+          <Modal open={isnewpostOpen} setOpen={setIsnewpostOpen}>
+            <form className="mx-20 my-10" onSubmit={(e) => e.preventDefault()}>
+              <div className="space-y-12">
+                <div className="border-b border-white/10 pb-12">
+                  <h2 className="text-base font-semibold leading-7 text-white">
+                    Profile
+                  </h2>
+                  <p className="mt-1 text-sm leading-6 text-gray-400">
+                    This information will be displayed publicly so be careful
+                    what you share.
+                  </p>
+
+                  <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div className="sm:col-span-4">
+                      <label
+                        htmlFor="username"
+                        className="block text-sm font-medium leading-6 text-white"
+                      >
+                        Username
+                      </label>
+                      <div className="mt-2">
+                        <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+                          <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
+                            workcation.com/
+                          </span>
+                          <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            autoComplete="username"
+                            className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="janesmith"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-span-full">
+                      <label
+                        htmlFor="about"
+                        className="block text-sm font-medium leading-6 text-white"
+                      >
+                        About
+                      </label>
+                      <div className="mt-2">
+                        <textarea
+                          id="about"
+                          name="about"
+                          rows={3}
+                          className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                          defaultValue={""}
+                        />
+                      </div>
+                      <p className="mt-3 text-sm leading-6 text-gray-400">
+                        Write a few sentences about yourself.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center justify-end gap-x-6">
+                <button
+                  onClick={() => setIsnewpostOpen(false)}
+                  className="text-sm font-semibold leading-6 text-white"
+                >
+                  Cancel
+                </button>
+                <button className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                  Save
+                </button>
+              </div>
+            </form>
+          </Modal>
+
           {/* Sticky search header */}
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 shadow-sm sm:px-6 lg:px-8">
             <button
@@ -140,48 +254,6 @@ export default function Example() {
                 Threads
               </h1>
               {/* Sort dropdown */}
-              <Dialog
-                open={isOpen}
-                onClose={() => setIsOpen(false)}
-                className="relative z-50"
-              >
-                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-                  <Dialog.Panel className="w-full max-w-sm rounded bg-white">
-                    <fieldset className="m-8">
-                      <legend className="text-base font-semibold leading-6 text-gray-900">
-                        Topics
-                      </legend>
-                      <div className="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
-                        {categories.map((person, personIdx) => (
-                          <div
-                            key={personIdx}
-                            className="relative flex items-start py-4"
-                          >
-                            <div className="min-w-0 flex-1 text-sm leading-6">
-                              <label
-                                htmlFor={`person-${person.id}`}
-                                className="select-none font-medium text-gray-900"
-                              >
-                                {person.name}
-                              </label>
-                            </div>
-                            <div className="ml-3 flex h-6 items-center">
-                              <input
-                                id={`person-${person.id}`}
-                                name={`person-${person.id}`}
-                                checked={person.value}
-                                onClick={() => tick(person.id)}
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </fieldset>
-                  </Dialog.Panel>
-                </div>
-              </Dialog>
 
               <button
                 onClick={() => setIsOpen(true)}
@@ -357,6 +429,12 @@ export default function Example() {
                     ))
                 : null}
             </ul>
+            <button
+              onClick={() => setIsnewpostOpen(true)}
+              className="rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
+            >
+              New Post
+            </button>
           </main>
 
           {/* Activity feed */}
