@@ -7,6 +7,7 @@ export type Path =
   | `/`
   | `/login`
   | `/posts/:postid`
+  | `/signup`
 
 export type Params = {
   '/posts/:postid': { postid: string }

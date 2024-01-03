@@ -11,8 +11,8 @@
 
 require 'date'
 
-user1 = User.create(name:"Chuah Zi Yang", email:"czyang2002@gmail.com", created_at: DateTime.now, password:"123456")
-user2 = User.create(name:"Sally", email:"testetst@gmail.com", created_at: DateTime.now, password:"123456asd")
+user1 = User.create(name:"Chuah Zi Yang", email:"czyang2002@gmail.com", password:"123456")
+user2 = User.create(name:"Sally", email:"testetst@gmail.com", password:"123456asd")
 
 
 Post.create(name:"Calories", category:"Politics", status:"offline", description:"This is a test post", created_at: DateTime.now, environment:"Active", user:user1, content:"hi, this is gonna be a long post so if you dont take CS (or CS2106) then you may just skip this…

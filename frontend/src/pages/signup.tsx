@@ -16,11 +16,12 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useAuthHeader, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
-import { login } from "../server/auth";
+import { signup } from "../server/users";
 
 export default function Example() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setname] = useState("");
 
   const signIn = useSignIn();
 
@@ -29,16 +30,15 @@ export default function Example() {
   const authHeader = useAuthHeader();
 
   const mutation = useMutation({
-    mutationFn: login,
+    mutationFn: signup,
     onSuccess: (data) => {
-      console.log(signIn(data));
-      navigate("/");
+      navigate("/login");
     },
   });
 
   const submit = () => {
-    console.log(email, password);
-    mutation.mutate({ email, password });
+    console.log(email, password, name);
+    mutation.mutate({ email, password, name });
   };
 
   return (
@@ -79,6 +79,24 @@ export default function Example() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-white"
+              >
+                name
+              </label>
+              <div className="mt-2">
+                <input
+                  value={name}
+                  onChange={(e) => setname(e.target.value)}
+                  id="name"
+                  name="name"
+                  required
+                  className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
             <div>
               <label
                 htmlFor="email"
