@@ -18,12 +18,11 @@ import {
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { useQuery } from "@tanstack/react-query";
-import { useRef, useState } from "react";
-import { useAuthHeader, useIsAuthenticated } from "react-auth-kit";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { Modal } from "../components/modal";
 import Shell from "../components/shell";
-import { getPosts } from "../server/posts";
+import { getPosts, newPost } from "../server/posts";
 import { Categories } from "../types/posts";
 
 const statuses = {
@@ -58,16 +57,19 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
-  const cancelButtonRef = useRef(null);
+  const [postTitle, setPostTitle] = useState("");
+  const [postContent, setPostContent] = useState("");
+  const [postCategory, setPostCategory] = useState("General");
 
-  const authHeader = useAuthHeader();
+  // const authHeader = useAuthHeader();
 
-  console.log(authHeader());
+  // console.log(authHeader());
 
-  const isAuthenticated = useIsAuthenticated();
+  // const isAuthenticated = useIsAuthenticated();
 
-  console.log(isAuthenticated());
+  // console.log(isAuthenticated());
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -91,11 +93,29 @@ export default function Example() {
     );
   };
 
+  function savePost() {
+    console.log(postTitle, postContent, postCategory);
+    newpost.mutate({
+      name: postTitle,
+      content: postContent,
+      category: postCategory,
+    });
+  }
+
   // console.log(categories2);
 
   const query = useQuery({
     queryKey: ["posts"],
     queryFn: getPosts(),
+  });
+
+  const newpost = useMutation({
+    mutationFn: newPost,
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      setIsnewpostOpen(false);
+    },
   });
   //get data from api
   return (
@@ -143,7 +163,7 @@ export default function Example() {
               <div className="space-y-12">
                 <div className="border-b border-white/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-white">
-                    Profile
+                    New Post
                   </h2>
                   <p className="mt-1 text-sm leading-6 text-gray-400">
                     This information will be displayed publicly so be careful
@@ -156,22 +176,46 @@ export default function Example() {
                         htmlFor="username"
                         className="block text-sm font-medium leading-6 text-white"
                       >
-                        Username
+                        Post Title
                       </label>
                       <div className="mt-2">
                         <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                          <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
+                          {/* <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
                             workcation.com/
-                          </span>
+                          </span> */}
                           <input
+                            value={postTitle}
+                            onChange={(e) => setPostTitle(e.target.value)}
                             type="text"
                             name="username"
                             id="username"
-                            autoComplete="username"
                             className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
-                            placeholder="janesmith"
+                            placeholder="My First Post"
                           />
                         </div>
+                      </div>
+                    </div>
+
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="country"
+                        className="block text-sm font-medium leading-6 text-white"
+                      >
+                        Country
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          value={postCategory}
+                          onChange={(e) => setPostCategory(e.target.value)}
+                          id="country"
+                          name="country"
+                          autoComplete="country-name"
+                          className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black"
+                        >
+                          {categories.map((category, index) => (
+                            <option key={index}>{category.name}</option>
+                          ))}
+                        </select>
                       </div>
                     </div>
 
@@ -180,19 +224,20 @@ export default function Example() {
                         htmlFor="about"
                         className="block text-sm font-medium leading-6 text-white"
                       >
-                        About
+                        Post Content
                       </label>
                       <div className="mt-2">
                         <textarea
+                          value={postContent}
+                          onChange={(e) => setPostContent(e.target.value)}
                           id="about"
                           name="about"
                           rows={3}
                           className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                          defaultValue={""}
                         />
                       </div>
                       <p className="mt-3 text-sm leading-6 text-gray-400">
-                        Write a few sentences about yourself.
+                        Write a few sentences about your post
                       </p>
                     </div>
                   </div>
@@ -206,7 +251,10 @@ export default function Example() {
                 >
                   Cancel
                 </button>
-                <button className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                <button
+                  onClick={savePost}
+                  className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                >
                   Save
                 </button>
               </div>
@@ -253,7 +301,7 @@ export default function Example() {
               <h1 className="text-base font-semibold leading-7 text-white">
                 Threads
               </h1>
-              {/* Sort dropdown */}
+              {newpost?.isSuccess}
 
               <button
                 onClick={() => setIsOpen(true)}

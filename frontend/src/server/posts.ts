@@ -1,5 +1,35 @@
-import { postOverview } from "../types/posts";
+import { Categories, postOverview } from "../types/posts";
 import axios from "./axios";
+
+export const newPost = ({
+  name,
+  content,
+  category,
+}: {
+  name: string;
+  content: string;
+  category: Categories;
+}) => {
+  return axios
+    .post("/posts", {
+      name: name,
+      category: category,
+      status: "offline",
+      description: "ASDASJDHALKSDJ HLAKJSHVDNKAJSHVD",
+      environment: "Active",
+      created_at: "2024-01-03T18:53:07.929Z",
+      updated_at: "2024-01-03T18:53:09.554Z",
+      content: content,
+      user_id: 1,
+    })
+    .then((res) => res.data)
+    .then((data) => {
+      console.log(data);
+      console.log(processPost(data));
+      return processPost(data) as postOverview;
+    });
+};
+
 export const getPosts = () => {
   return () =>
     axios

@@ -6,7 +6,8 @@
   "scripts": {
     "cdev": "cd frontend/ && npm run dev",
     "sdev": "cd backend/ && rails server",
-    "dev": "concurrently \"bun run cdev\" \"bun run sdev\""
+    "dev": "concurrently \"bun run cdev\" \"bun run sdev\"",
+    "reset": "cd backend/ && rails db:reset"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
