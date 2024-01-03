@@ -61,7 +61,9 @@ export default function Example() {
   const [searchTerm, setSearchTerm] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
-  const [postCategory, setPostCategory] = useState("General");
+  const [postCategory, setPostCategory] = useState<Categories>(
+    Categories.General
+  );
 
   // const authHeader = useAuthHeader();
 
