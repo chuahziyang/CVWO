@@ -208,7 +208,9 @@ export default function Example() {
                       <div className="mt-2">
                         <select
                           value={postCategory}
-                          onChange={(e) => setPostCategory(e.target.value)}
+                          onChange={(e) =>
+                            setPostCategory(e.target.value as Categories)
+                          }
                           id="country"
                           name="country"
                           autoComplete="country-name"
