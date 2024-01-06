@@ -149,6 +149,7 @@ export default function Example() {
               content={query.data.content}
               date={query.data.created_at}
               author={query.data.user.name}
+              authorid={query.data.user.id}
             ></Postarea>
           )}
           <ul role="list" className="space-y-6">

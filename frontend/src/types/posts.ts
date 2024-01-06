@@ -25,7 +25,7 @@ export type postOverview = {
 };
 
 export type User = {
-  id: string;
+  id: number;
   name: string;
   email: string;
   created_at: Date;
