@@ -65,6 +65,7 @@ export default function Example() {
   console.log(cookies);
 
   const navigate = useNavigate();
+
   if (!cookies.token) {
     navigate("/login");
   }

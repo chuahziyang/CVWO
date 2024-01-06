@@ -13,6 +13,7 @@ import { Fragment } from "react";
 import { images } from "../types/imagedata";
 //@ts-ignore
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { getPosts } from "../server/posts";
 const navigation = [
   { name: "Projects", href: "#", icon: FolderIcon, current: false },
@@ -105,6 +106,8 @@ export default Shell;
 function newFunction(background: boolean) {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
+  const navigate = useNavigate();
+
   console.log(cookies);
 
   const query = useQuery({
@@ -192,6 +195,16 @@ function newFunction(background: boolean) {
               />
               <span className="sr-only">Your profile</span>
               <span aria-hidden="true">{cookies?.user?.name}</span>
+              <button
+                onClick={() => {
+                  removeCookie("user");
+                  removeCookie("token");
+                  navigate("/login");
+                }}
+              >
+                {" "}
+                Log out
+              </button>
             </a>
           </li>
         </ul>
