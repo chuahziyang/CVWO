@@ -5,4 +5,10 @@ class CommentsController < ApplicationController
     comments = Comment.includes(:user, :post).all
     render json: comments.to_json(include: [:user, :post])
   end
+
+  def create
+  comment = Comment.create(content:params[:content], user_id:params[:user_id], post_id:params[:post_id])
+  render json: name
+  end
+e
 end
