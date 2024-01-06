@@ -26,7 +26,7 @@ export default function Example() {
 
   const mutation = useMutation({
     mutationFn: signup,
-    onSuccess: (data) => {
+    onSuccess: () => {
       navigate("/login");
     },
   });

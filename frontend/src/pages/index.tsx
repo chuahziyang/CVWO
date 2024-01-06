@@ -61,7 +61,7 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const [cookies, setCookie] = useCookies(["name"]);
+  const [cookies] = useCookies(["name"]);
 
   const navigate = useNavigate();
 
