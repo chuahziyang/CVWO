@@ -12,20 +12,18 @@
   }
   ```
 */
-import { Listbox, Transition } from "@headlessui/react";
 import {
   FaceFrownIcon,
   FaceSmileIcon,
   FireIcon,
   HandThumbUpIcon,
   HeartIcon,
-  PaperClipIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useQuery } from "@tanstack/react-query";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import Comment from "../../components/comments";
 import Postarea from "../../components/postarea";
 import Shell from "../../components/shell";
 import { getPost } from "../../server/posts";
@@ -152,7 +150,7 @@ export default function Example() {
               authorid={query.data.user.id}
             ></Postarea>
           )}
-          <ul role="list" className="space-y-6">
+          {/* <ul role="list" className="space-y-6">
             {activity.map((activityItem, activityItemIdx) => (
               <li key={activityItem.id} className="relative flex gap-x-4">
                 <div
@@ -221,7 +219,6 @@ export default function Example() {
               </li>
             ))}
           </ul>
-          {/* New comment form */}
           <div className="mt-6 flex gap-x-3">
             <img
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -349,7 +346,8 @@ export default function Example() {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
+          <Comment></Comment>
         </div>
       </Shell>
     </>
