@@ -62,7 +62,6 @@ function classNames(...classes) {
 
 export default function Example() {
   const [cookies, setCookie] = useCookies(["name"]);
-  console.log(cookies);
 
   const navigate = useNavigate();
 
@@ -72,6 +71,9 @@ export default function Example() {
 
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
+
+  // New post UI
+  const [isnewpostOpen, setIsnewpostOpen] = useState(false);
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [postCategory, setPostCategory] = useState<Categories>(
@@ -80,10 +82,7 @@ export default function Example() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [isnewpostOpen, setIsnewpostOpen] = useState(false);
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const [categories, setCategories] = useState(
     Object.values(Categories).map((category, index) => ({
       id: index + 1,
