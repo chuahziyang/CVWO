@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { Fragment } from "react";
+//@ts-ignore
 import { useCookies } from "react-cookie";
 import { getPosts } from "../server/posts";
 const navigation = [

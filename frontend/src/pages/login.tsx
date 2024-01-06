@@ -14,6 +14,7 @@
 */
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+//@ts-ignore
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { login } from "../server/auth";
