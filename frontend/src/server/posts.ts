@@ -38,7 +38,7 @@ export const getPosts = () => {
       .get("/posts")
       .then((res) => res.data)
       .then((data) => {
-        return data.map((post: any) => processPost(post)) as Post[];
+        return data.map((post: any) => processPost(post));
       });
 };
 
@@ -48,11 +48,11 @@ export const getPost = (id: string) => {
       .get(`/posts/${id}`)
       .then((res) => res.data)
       .then((data) => {
-        return processPost(data) as Post;
+        return processPost(data);
       });
 };
 
-const processPost = (post: any) => {
+const processPost = (post: any): Post => {
   return {
     ...post,
     created_at: new Date(post.created_at),
@@ -62,5 +62,15 @@ const processPost = (post: any) => {
       created_at: new Date(post.user.created_at),
       updated_at: new Date(post.user.updated_at),
     },
+    comments: [
+      {
+        id: 1,
+        post_id: 1,
+        user_id: 1,
+        content: "This is a comment",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ],
   };
 };
