@@ -104,7 +104,7 @@ const Shell = ({ children, isOpen, setSidebarOpen }: any) => {
 export default Shell;
 
 function newFunction(background: boolean) {
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const [cookies, removeCookie] = useCookies(["user"]);
 
   const navigate = useNavigate();
 
