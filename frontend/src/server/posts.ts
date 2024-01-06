@@ -5,9 +5,11 @@ export const newPost = ({
   name,
   content,
   category,
+  user_id,
 }: {
   name: string;
   content: string;
+  user_id: number;
   category: Categories;
 }) => {
   return axios
@@ -20,7 +22,7 @@ export const newPost = ({
       created_at: "2024-01-03T18:53:07.929Z",
       updated_at: "2024-01-03T18:53:09.554Z",
       content: content,
-      user_id: 1,
+      user_id,
     })
     .then((res) => res.data)
     .then((data) => {

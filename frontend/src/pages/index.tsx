@@ -12,6 +12,7 @@
   }
   ```
 */
+
 import {
   Bars3Icon,
   ChevronRightIcon,
@@ -20,7 +21,9 @@ import {
 } from "@heroicons/react/20/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+//@ts-ignore
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { Modal } from "../components/modal";
 import Shell from "../components/shell";
 import { getPosts, newPost } from "../server/posts";
@@ -58,10 +61,15 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const queryClient = useQueryClient();
   const [cookies, setCookie] = useCookies(["name"]);
   console.log(cookies);
 
+  const navigate = useNavigate();
+  if (!cookies.token) {
+    navigate("/login");
+  }
+
+  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
@@ -97,6 +105,7 @@ export default function Example() {
       name: postTitle,
       content: postContent,
       category: postCategory,
+      user_id: cookies.user.id,
     });
   }
 

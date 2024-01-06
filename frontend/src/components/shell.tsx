@@ -190,7 +190,7 @@ function newFunction(background: boolean) {
                 alt=""
               />
               <span className="sr-only">Your profile</span>
-              <span aria-hidden="true">{cookies.user.name}</span>
+              <span aria-hidden="true">{cookies?.user?.name}</span>
             </a>
           </li>
         </ul>
