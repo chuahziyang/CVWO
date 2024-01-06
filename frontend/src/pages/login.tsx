@@ -14,24 +14,22 @@
 */
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { useAuthHeader, useSignIn } from "react-auth-kit";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { login } from "../server/auth";
 
 export default function Example() {
+  const [cookies, setCookie] = useCookies(["name"]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const signIn = useSignIn();
-
   const navigate = useNavigate();
-
-  const authHeader = useAuthHeader();
 
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      console.log(signIn(data));
+      setCookie("token", data.token, { path: "/" });
+      console.log(cookies);
       navigate("/");
     },
   });
@@ -139,7 +137,6 @@ export default function Example() {
             </div>
           </form>
 
-          {authHeader()}
           {/* <p className="mt-10 text-center text-sm text-gray-400">
             Not a member?{" "}
             <a

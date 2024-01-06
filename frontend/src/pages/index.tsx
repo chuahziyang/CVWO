@@ -20,6 +20,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { Modal } from "../components/modal";
 import Shell from "../components/shell";
 import { getPosts, newPost } from "../server/posts";
@@ -58,20 +59,15 @@ function classNames(...classes) {
 
 export default function Example() {
   const queryClient = useQueryClient();
+  const [cookies, setCookie] = useCookies(["name"]);
+  console.log(cookies);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [postCategory, setPostCategory] = useState<Categories>(
     Categories.General
   );
-
-  // const authHeader = useAuthHeader();
-
-  // console.log(authHeader());
-
-  // const isAuthenticated = useIsAuthenticated();
-
-  // console.log(isAuthenticated());
 
   const [isOpen, setIsOpen] = useState(false);
 

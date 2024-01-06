@@ -14,7 +14,6 @@
 */
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { useAuthHeader, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../server/users";
 
@@ -23,11 +22,7 @@ export default function Example() {
   const [password, setPassword] = useState("");
   const [name, setname] = useState("");
 
-  const signIn = useSignIn();
-
   const navigate = useNavigate();
-
-  const authHeader = useAuthHeader();
 
   const mutation = useMutation({
     mutationFn: signup,
@@ -157,7 +152,6 @@ export default function Example() {
             </div>
           </form>
 
-          {authHeader()}
           {/* <p className="mt-10 text-center text-sm text-gray-400">
             Not a member?{" "}
             <a
