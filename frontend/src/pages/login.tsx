@@ -29,6 +29,7 @@ export default function Example() {
     mutationFn: login,
     onSuccess: (data) => {
       setCookie("token", data.token, { path: "/" });
+      setCookie("user", data.user, { path: "/" });
       console.log(cookies);
       navigate("/");
     },

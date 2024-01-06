@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { Fragment } from "react";
+import { useCookies } from "react-cookie";
 import { getPosts } from "../server/posts";
 const navigation = [
   { name: "Projects", href: "#", icon: FolderIcon, current: false },
@@ -25,8 +26,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Shell = ({ children, isOpen, setSidebarOpen }: any) => {
-  console.log("isOpen", isOpen);
-  console.log("setSidebarOpen", setSidebarOpen);
   return (
     <>
       <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
@@ -102,6 +101,10 @@ const Shell = ({ children, isOpen, setSidebarOpen }: any) => {
 export default Shell;
 
 function newFunction(background: boolean) {
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
+  console.log(cookies);
+
   const query = useQuery({
     queryKey: ["myposts"],
     queryFn: getPosts(),
@@ -186,7 +189,7 @@ function newFunction(background: boolean) {
                 alt=""
               />
               <span className="sr-only">Your profile</span>
-              <span aria-hidden="true">Tom Cook</span>
+              <span aria-hidden="true">{cookies.user.name}</span>
             </a>
           </li>
         </ul>
