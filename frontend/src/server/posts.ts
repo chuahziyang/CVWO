@@ -1,4 +1,4 @@
-import { Categories, postOverview } from "../types/posts";
+import { Categories, Post } from "../types/posts";
 import axios from "./axios";
 
 export const newPost = ({
@@ -28,7 +28,7 @@ export const newPost = ({
     .then((data) => {
       console.log(data);
       console.log(processPost(data));
-      return processPost(data) as postOverview;
+      return processPost(data) as Post;
     });
 };
 
@@ -38,7 +38,7 @@ export const getPosts = () => {
       .get("/posts")
       .then((res) => res.data)
       .then((data) => {
-        return data.map((post: any) => processPost(post)) as postOverview[];
+        return data.map((post: any) => processPost(post)) as Post[];
       });
 };
 
@@ -48,7 +48,7 @@ export const getPost = (id: string) => {
       .get(`/posts/${id}`)
       .then((res) => res.data)
       .then((data) => {
-        return processPost(data) as postOverview;
+        return processPost(data) as Post;
       });
 };
 

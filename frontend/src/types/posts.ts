@@ -10,7 +10,7 @@ export enum Categories {
   Music = "Music",
   Fashion = "Fashion",
 }
-export type postOverview = {
+export type Post = {
   id: number;
   category: Categories;
   name: string;
@@ -22,6 +22,7 @@ export type postOverview = {
   content: string;
   user_id: number;
   user: User;
+  comments: Comment[];
 };
 
 export type User = {
@@ -31,4 +32,13 @@ export type User = {
   created_at: Date;
   updated_at: Date;
   admin: boolean;
+};
+
+export type Comment = {
+  id: number;
+  post_id: number;
+  user_id: number;
+  content: string;
+  created_at: Date;
+  updated_at: Date;
 };
