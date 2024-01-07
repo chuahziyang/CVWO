@@ -142,13 +142,14 @@ export default function Example({
       post_id: postid,
       user_id: cookie.user.id,
     });
+    setNewcomment("");
   };
 
   return (
     <div className="mx-10">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
-          Discussion {comments.length}
+          Comments ({comments.length})
         </h2>
       </div>
       <form className="mb-6">

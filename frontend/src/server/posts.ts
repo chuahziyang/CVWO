@@ -1,5 +1,8 @@
 import { Categories, Post } from "../types/posts";
-import axios from "./axios";
+import { axios, axioswithAuth } from "./axios";
+
+const token =
+  "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MDUxNzc0MDd9.0nrmUHZbOcWwDKCtDumq2bgmvH_gqpSVsVLOkOjqf2c";
 
 export const newPost = ({
   name,
@@ -34,7 +37,7 @@ export const newPost = ({
 
 export const getPosts = () => {
   return () =>
-    axios
+    axioswithAuth(token)
       .get("/posts")
       .then((res) => res.data)
       .then((data) => {

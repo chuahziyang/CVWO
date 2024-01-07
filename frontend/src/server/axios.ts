@@ -1,13 +1,17 @@
-import axios from "axios";
+import axiosalias from "axios";
 
-const header =
+const test =
   "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MDUxNzc0MDd9.0nrmUHZbOcWwDKCtDumq2bgmvH_gqpSVsVLOkOjqf2c";
 
-const instance = axios.create({
+export const axios = axiosalias.create({
   baseURL: "http://localhost:3000",
-  headers: {
-    Authorization: "Bearer " + header,
-  },
 });
 
-export default instance;
+export const axioswithAuth = (header: string) => {
+  return axiosalias.create({
+    baseURL: "http://localhost:3000",
+    headers: {
+      Authorization: "Bearer " + header,
+    },
+  });
+};
