@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   protect_from_forgery with: :null_session
-  skip_before_action :authenticate_user
+  # skip_before_action :authenticate_user
 
   def index
     comments = Comment.includes(:user, :post).all
@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    comment = Comment.create(content:params[:content], user_id:params[:user_id], post_id:params[:post_id])
+    comment = Comment.create(content:params[:content], user_id:@current_user.id, post_id:params[:post_id])
     render json: comment
   end
 end

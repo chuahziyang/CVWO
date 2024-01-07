@@ -1,18 +1,18 @@
-import { axios } from "./axios";
+import { axioswithAuth } from "./axios";
+
+const token =
+  "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MDUxNzc0MDd9.0nrmUHZbOcWwDKCtDumq2bgmvH_gqpSVsVLOkOjqf2c";
 
 export const newComment = ({
   content,
-  user_id,
   post_id,
 }: {
   content: string;
-  user_id: number;
   post_id: number;
 }) => {
-  return axios
+  return axioswithAuth(token)
     .post("/comments", {
       content,
-      user_id,
       post_id,
     })
     .then((res) => res.data)
