@@ -41,4 +41,5 @@ export type Comment = {
   content: string;
   created_at: Date;
   updated_at: Date;
+  user: User;
 };

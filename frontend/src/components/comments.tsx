@@ -19,7 +19,7 @@ const commentBlock = (comments: Comment[]) => {
                     src={images[comment.user_id]}
                     alt="Helene Engels"
                   ></img>
-                  Bonnie Green
+                  {comment.user.name}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   <time pubdate datetime="2022-03-12" title="March 12th, 2022">
