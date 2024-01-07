@@ -141,7 +141,6 @@ export default function Example({
     mutation.mutate({
       content: newcomment,
       post_id: postid,
-      user_id: cookie.user.id,
     });
     setNewcomment("");
   };

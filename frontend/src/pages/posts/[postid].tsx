@@ -94,6 +94,7 @@ export default function Example() {
           {query.isSuccess && (
             <>
               <Postarea
+                category={query.data.category}
                 content={query.data.content}
                 date={query.data.created_at}
                 author={query.data.user.name}

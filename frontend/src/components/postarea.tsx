@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
 import { images } from "../types/imagedata";
+import { Categories } from "../types/posts";
 
 //@ts-ignore
 function classNames(...classes) {
@@ -18,11 +19,13 @@ export default function Example({
   date,
   author,
   authorid,
+  category,
 }: {
   content: string;
   author: string;
   date: Date;
   authorid: number;
+  category: Categories;
 }) {
   return (
     <div className="bg-gray-900 px-4 py-5 sm:px-6">
@@ -36,9 +39,15 @@ export default function Example({
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-gray-100">
-            <a href="#" className="hover:underline">
+            <span className="truncate">
               {author}
-            </a>
+              {`  `}
+            </span>
+            <span className="text-gray-400">/</span>
+            <span className="whitespace-nowrap">
+              {`  `}
+              {category}
+            </span>
           </p>
           <p className="text-sm text-gray-500">
             <a href="#" className="hover:underline">
