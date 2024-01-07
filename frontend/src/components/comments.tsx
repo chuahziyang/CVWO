@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import moment from "moment";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { newComment } from "../server/comments";
@@ -21,11 +22,9 @@ const commentBlock = (comments: Comment[]) => {
                   ></img>
                   {comment.user.name}
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-xs text-gray-600 dark:text-gray-400">
                   <time pubdate datetime="2022-03-12" title="March 12th, 2022">
-                    {/* {comment.created_at.getTime() - new Date().getTime()}
-                    asdasd */}
-                    asdasd
+                    {moment(comment.created_at).fromNow()}
                   </time>
                 </p>
               </div>
