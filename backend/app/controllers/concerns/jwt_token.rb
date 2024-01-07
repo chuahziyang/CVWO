@@ -12,6 +12,7 @@ module JwtToken
   end
 
   def jwt_decode(token)
+    puts token
     decoded = JWT.decode(token, SECRET_KEY)[0]
     HashWithIndifferentAccess.new decoded
   end

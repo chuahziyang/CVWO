@@ -1,12 +1,13 @@
 class PostsController < ApplicationController
    protect_from_forgery with: :null_session
-   skip_before_action :authenticate_request
+   # skip_before_action :authenticate_request
    def index
       posts = Post.includes(:user,  :comments).all
       render json: posts.to_json(include: [:user, :comments])
    end
 
    def show
+      puts @current_user.inspect
       post = Post.includes(:user, :comments).find(params[:id])
       render json: post.to_json(include: [:user, :comments])
    end
