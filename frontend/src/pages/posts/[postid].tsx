@@ -87,8 +87,6 @@ export default function Example() {
     queryFn: getPost(postid),
   });
 
-  console.log(query.data);
-  console.log(query.isSuccess);
   return (
     <>
       <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
