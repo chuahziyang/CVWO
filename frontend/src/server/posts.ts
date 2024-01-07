@@ -41,7 +41,7 @@ export const getPosts = () => {
       .get("/posts")
       .then((res) => res.data)
       .then((data) => {
-        return data.map((post: any) => processPost(post));
+        return data.map((post: any) => processPost(post)) as Post[];
       });
 };
 
