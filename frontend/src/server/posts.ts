@@ -68,10 +68,12 @@ const processPost = (post: any): Post => {
       created_at: new Date(post.user.created_at),
       updated_at: new Date(post.user.updated_at),
     },
-    comments: post.comments.map((comment: any) => ({
-      ...comment,
-      created_at: new Date(comment.created_at),
-      updated_at: new Date(comment.updated_at),
-    })),
+    comments: post.comments
+      .map((comment: any) => ({
+        ...comment,
+        created_at: new Date(comment.created_at),
+        updated_at: new Date(comment.updated_at),
+      }))
+      .reverse(),
   };
 };

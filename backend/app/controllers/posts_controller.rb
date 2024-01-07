@@ -9,7 +9,7 @@ class PostsController < ApplicationController
    def show
       puts @current_user.inspect
       post = Post.includes(:user, comments: [:user]).find(params[:id])
-      render json: post.to_json(include: { user: {}, comments: { include: :user } })
+      render json: post.to_json(include: { user: {}, comments: { include: :user, order: { created_at: :desc } } })
    end
 
    def create
