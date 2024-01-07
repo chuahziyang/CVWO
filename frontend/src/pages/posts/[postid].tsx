@@ -87,7 +87,7 @@ export default function Example() {
     queryFn: getPost(postid),
   });
 
-  console.log(query.data);
+  console.log(query.data?.comments);
   return (
     <>
       <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
@@ -100,7 +100,10 @@ export default function Example() {
                 author={query.data.user.name}
                 authorid={query.data.user.id}
               ></Postarea>
-              <Comment comments={query.data.comments}></Comment>)
+              <Comment
+                postid={parseInt(postid)}
+                comments={query.data.comments}
+              ></Comment>
             </>
           )}
         </div>
