@@ -4,18 +4,16 @@ import { axios, axioswithAuth } from "./axios";
 const token =
   "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MDUxNzc0MDd9.0nrmUHZbOcWwDKCtDumq2bgmvH_gqpSVsVLOkOjqf2c";
 
-export const newPost = ({
+export const newPostAuth = ({
   name,
   content,
   category,
-  user_id,
 }: {
   name: string;
   content: string;
-  user_id: number;
   category: Categories;
 }) => {
-  return axios
+  return axioswithAuth(token)
     .post("/posts", {
       name: name,
       category: category,
@@ -25,7 +23,6 @@ export const newPost = ({
       created_at: "2024-01-03T18:53:07.929Z",
       updated_at: "2024-01-03T18:53:09.554Z",
       content: content,
-      user_id,
     })
     .then((res) => res.data)
     .then((data) => {

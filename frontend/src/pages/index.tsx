@@ -26,7 +26,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../components/modal";
 import Shell from "../components/shell";
-import { getPosts, newPost } from "../server/posts";
+import { getPosts, newPostAuth } from "../server/posts";
 import { Categories } from "../types/posts";
 
 const statuses = {
@@ -105,7 +105,6 @@ export default function Example() {
       name: postTitle,
       content: postContent,
       category: postCategory,
-      user_id: cookies.user.id,
     });
   }
 
@@ -117,7 +116,7 @@ export default function Example() {
   });
 
   const newpost = useMutation({
-    mutationFn: newPost,
+    mutationFn: newPostAuth,
     onSuccess: (data) => {
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ["posts"] });
