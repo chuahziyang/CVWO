@@ -1,5 +1,5 @@
 import { Categories, Post } from "../types/posts";
-import { axios, axioswithAuth } from "./axios";
+import { axios } from "./axios";
 
 const token =
   "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MDUxNzc0MDd9.0nrmUHZbOcWwDKCtDumq2bgmvH_gqpSVsVLOkOjqf2c";
@@ -13,17 +13,25 @@ export const newPostAuth = ({
   content: string;
   category: Categories;
 }) => {
-  return axioswithAuth(token)
-    .post("/posts", {
-      name: name,
-      category: category,
-      status: "offline",
-      description: "ASDASJDHALKSDJ HLAKJSHVDNKAJSHVD",
-      environment: "Active",
-      created_at: "2024-01-03T18:53:07.929Z",
-      updated_at: "2024-01-03T18:53:09.554Z",
-      content: content,
-    })
+  return axios
+    .post(
+      "/posts",
+      {
+        name: name,
+        category: category,
+        status: "offline",
+        description: "ASDASJDHALKSDJ HLAKJSHVDNKAJSHVD",
+        environment: "Active",
+        created_at: "2024-01-03T18:53:07.929Z",
+        updated_at: "2024-01-03T18:53:09.554Z",
+        content: content,
+      },
+      {
+        headers: {
+          Authorization: "bearer " + token,
+        },
+      }
+    )
     .then((res) => res.data)
     .then((data) => {
       console.log(data);
@@ -34,7 +42,7 @@ export const newPostAuth = ({
 
 export const getPosts = () => {
   return () =>
-    axioswithAuth(token)
+    axios
       .get("/posts")
       .then((res) => res.data)
       .then((data) => {
