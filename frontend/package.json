@@ -21,7 +21,8 @@
     "react-cookie": "^7.0.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
-    "serve": "^14.2.1"
+    "serve": "^14.2.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.14.6",
