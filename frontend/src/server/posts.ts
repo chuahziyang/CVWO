@@ -1,5 +1,6 @@
 import { Categories, Post } from "../types/posts";
 import { axios } from "./axios";
+import { getComments } from "./comments";
 
 export const newPostAuth = ({
   name,
@@ -47,6 +48,14 @@ export const getPosts = () => {
       .then((data) => {
         return data.map((post: any) => processPost(post)) as Post[];
       });
+};
+
+export const getActivity = async () => {
+  const posts = await getPosts()();
+  const comments = await getComments()();
+
+  console.log(posts);
+  console.log(comments);
 };
 
 export const getPost = (id: string) => {

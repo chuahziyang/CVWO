@@ -1,5 +1,16 @@
 import { axios } from "./axios";
 
+export const getComments = () => {
+  return () =>
+    axios
+      .get("/comments")
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+};
+
 export const newCommentauth = ({
   content,
   post_id,
