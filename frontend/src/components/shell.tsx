@@ -1,13 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import {
-  ChartBarSquareIcon,
-  Cog6ToothIcon,
-  FolderIcon,
-  GlobeAltIcon,
-  ServerIcon,
-  SignalIcon,
-} from "@heroicons/react/24/outline";
+import { Cog6ToothIcon, FolderIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { Fragment } from "react";
 import { images } from "../types/imagedata";
@@ -15,12 +8,9 @@ import { images } from "../types/imagedata";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { getPosts } from "../server/posts";
+
 const navigation = [
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Deployments", href: "#", icon: ServerIcon, current: true },
-  { name: "Activity", href: "#", icon: SignalIcon, current: false },
-  { name: "Domains", href: "#", icon: GlobeAltIcon, current: false },
-  { name: "Usage", href: "#", icon: ChartBarSquareIcon, current: false },
+  { name: "Posts", href: "#", icon: FolderIcon, current: true },
   { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
 ];
 
