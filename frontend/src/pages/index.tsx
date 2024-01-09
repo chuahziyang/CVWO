@@ -430,7 +430,8 @@ export default function Example() {
                     .map((post) => (
                       <li
                         key={post.id}
-                        className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
+                        className="hover:bg-gray-800
+                        relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
                       >
                         <div className="min-w-0 flex-auto">
                           <div className="flex items-center gap-x-3">
