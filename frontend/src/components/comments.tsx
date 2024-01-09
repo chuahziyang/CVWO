@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { newComment } from "../server/comments";
+import { newCommentauth } from "../server/comments";
 import { images } from "../types/imagedata";
 import { Comment } from "../types/posts";
 
@@ -127,7 +127,7 @@ export default function Example({
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: newComment,
+    mutationFn: newCommentauth,
     onSuccess: () => {
       console.log("asdasd");
       queryClient.invalidateQueries({
@@ -140,6 +140,7 @@ export default function Example({
     e.preventDefault();
     mutation.mutate({
       content: newcomment,
+      token: cookie.token,
       post_id: postid,
     });
     setNewcomment("");

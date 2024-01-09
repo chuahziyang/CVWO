@@ -105,7 +105,12 @@ export default function Example() {
       name: postTitle,
       content: postContent,
       category: postCategory,
+      token: cookies.token,
     });
+
+    setPostTitle("");
+    setPostContent("");
+    setPostCategory(Categories.General);
   }
 
   // console.log(categories2);

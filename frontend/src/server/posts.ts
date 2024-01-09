@@ -1,17 +1,16 @@
 import { Categories, Post } from "../types/posts";
 import { axios } from "./axios";
 
-const token =
-  "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MDUxNzc0MDd9.0nrmUHZbOcWwDKCtDumq2bgmvH_gqpSVsVLOkOjqf2c";
-
 export const newPostAuth = ({
   name,
   content,
   category,
+  token,
 }: {
   name: string;
   content: string;
   category: Categories;
+  token: string;
 }) => {
   return axios
     .post(

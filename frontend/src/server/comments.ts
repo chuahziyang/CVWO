@@ -1,14 +1,13 @@
 import { axios } from "./axios";
 
-const token =
-  "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MDUxNzc0MDd9.0nrmUHZbOcWwDKCtDumq2bgmvH_gqpSVsVLOkOjqf2c";
-
-export const newComment = ({
+export const newCommentauth = ({
   content,
   post_id,
+  token,
 }: {
   content: string;
   post_id: number;
+  token: string;
 }) => {
   return axios
     .post(
