@@ -319,7 +319,7 @@ export default function Example() {
                 onClick={() => setIsOpen(true)}
                 className="flex items-center gap-x-1 text-sm font-medium leading-6 text-white"
               >
-                Sort by
+                Filter by Category
                 <ChevronUpDownIcon
                   className="h-5 w-5 text-gray-500"
                   aria-hidden="true"
