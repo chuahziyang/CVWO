@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import { Cog6ToothIcon, FolderIcon } from "@heroicons/react/24/outline";
+import { FolderIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { Fragment } from "react";
 import { images } from "../types/imagedata";
@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { getPosts } from "../server/posts";
 
 const navigation = [
-  { name: "Posts", href: "#", icon: FolderIcon, current: true },
-  { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
+  { name: "Posts", href: "/", icon: FolderIcon, current: true },
+  // { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
 ];
 
 //@ts-ignore
