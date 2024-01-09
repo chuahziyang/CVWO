@@ -313,8 +313,13 @@ export default function Example() {
               <h1 className="text-base font-semibold leading-7 text-white">
                 Threads
               </h1>
-              {newpost?.isSuccess}
 
+              <button
+                onClick={() => setIsnewpostOpen(true)}
+                className="rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
+              >
+                New Post
+              </button>
               <button
                 onClick={() => setIsOpen(true)}
                 className="flex items-center gap-x-1 text-sm font-medium leading-6 text-white"
@@ -490,12 +495,6 @@ export default function Example() {
                     ))
                 : null}
             </ul>
-            <button
-              onClick={() => setIsnewpostOpen(true)}
-              className="rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
-            >
-              New Post
-            </button>
           </main>
 
           {/* Activity feed */}
