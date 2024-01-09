@@ -3,6 +3,7 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { FolderIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { Fragment } from "react";
+import { useLocation } from "react-router-dom";
 import { images } from "../types/imagedata";
 //@ts-ignore
 import { useCookies } from "react-cookie";
@@ -100,6 +101,8 @@ function newFunction(background: boolean) {
 
   console.log(cookies);
 
+  const location = useLocation();
+  console.log(location.pathname);
   const query = useQuery({
     queryKey: ["myposts"],
     queryFn: getPosts(),
@@ -158,7 +161,7 @@ function newFunction(background: boolean) {
                       <a
                         href={`/posts/${post.id}`}
                         className={classNames(
-                          false
+                          location.pathname === `/posts/${post.id}`
                             ? "bg-gray-800 text-white"
                             : "text-gray-400 hover:text-white hover:bg-gray-800",
                           "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
