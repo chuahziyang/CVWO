@@ -1,3 +1,4 @@
+import { XCircleIcon } from "@heroicons/react/20/solid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { useState } from "react";
@@ -123,6 +124,8 @@ export default function Example({
 
   const [newcomment, setNewcomment] = useState("");
 
+  const [showError, setShowError] = useState(false);
+
   const [cookie] = useCookies(["token"]);
   const queryClient = useQueryClient();
 
@@ -138,12 +141,18 @@ export default function Example({
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    if (newcomment === "") {
+      setShowError(true);
+      return;
+    }
+
     mutation.mutate({
       content: newcomment,
       token: cookie.token,
       post_id: postid,
     });
     setNewcomment("");
+    setShowError(false);
   };
 
   return (
@@ -170,6 +179,7 @@ export default function Example({
             required
           ></textarea>
         </div>
+        {showError && ErrorMessage()}
         <button
           onClick={handleSubmit}
           className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-blue-900 hover:bg-blue-800"
@@ -181,3 +191,25 @@ export default function Example({
     </div>
   );
 }
+
+const ErrorMessage = () => {
+  return (
+    <div className="rounded-md bg-red-50 p-4 my-4">
+      <div className="flex">
+        <div className="flex-shrink-0">
+          <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+        </div>
+        <div className="ml-3">
+          <h3 className="text-sm font-medium text-red-800">
+            There were an error with your comment
+          </h3>
+          <div className="mt-2 text-sm text-red-700">
+            <ul role="list" className="list-disc space-y-1 pl-5">
+              <li>Comment must not be empty</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
