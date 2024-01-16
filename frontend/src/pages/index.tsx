@@ -133,145 +133,20 @@ export default function Example() {
       <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
         <div>
           {/* Sort By Modal*/}
-          <Modal open={isOpen} setOpen={setIsOpen}>
-            <fieldset className="m-8">
-              <legend className="text-base font-semibold leading-6 text-white">
-                Topics
-              </legend>
-              <div className="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
-                {categories.map((person, personIdx) => (
-                  <div
-                    key={personIdx}
-                    className="relative flex items-start py-4"
-                  >
-                    <div className="min-w-0 flex-1 text-sm leading-6">
-                      <label
-                        htmlFor={`person-${person.id}`}
-                        className="select-none font-medium text-white"
-                      >
-                        {person.name}
-                      </label>
-                    </div>
-                    <div className="ml-3 flex h-6 items-center">
-                      <input
-                        id={`person-${person.id}`}
-                        name={`person-${person.id}`}
-                        checked={person.value}
-                        onClick={() => tick(person.id)}
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </fieldset>
-          </Modal>
+          {categoryFilter(isOpen, setIsOpen, categories, tick)}
 
-          <Modal open={isnewpostOpen} setOpen={setIsnewpostOpen}>
-            <form className="mx-20 my-10" onSubmit={(e) => e.preventDefault()}>
-              <div className="space-y-12">
-                <div className="border-b border-white/10 pb-12">
-                  <h2 className="text-base font-semibold leading-7 text-white">
-                    New Post
-                  </h2>
-                  <p className="mt-1 text-sm leading-6 text-gray-400">
-                    This information will be displayed publicly so be careful
-                    what you share.
-                  </p>
-
-                  <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div className="sm:col-span-4">
-                      <label
-                        htmlFor="username"
-                        className="block text-sm font-medium leading-6 text-white"
-                      >
-                        Post Title
-                      </label>
-                      <div className="mt-2">
-                        <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                          {/* <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
-                            workcation.com/
-                          </span> */}
-                          <input
-                            value={postTitle}
-                            onChange={(e) => setPostTitle(e.target.value)}
-                            type="text"
-                            name="username"
-                            id="username"
-                            className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
-                            placeholder="My First Post"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="sm:col-span-3">
-                      <label
-                        htmlFor="country"
-                        className="block text-sm font-medium leading-6 text-white"
-                      >
-                        Country
-                      </label>
-                      <div className="mt-2">
-                        <select
-                          value={postCategory}
-                          onChange={(e) =>
-                            setPostCategory(e.target.value as Categories)
-                          }
-                          id="country"
-                          name="country"
-                          autoComplete="country-name"
-                          className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black"
-                        >
-                          {categories.map((category, index) => (
-                            <option key={index}>{category.name}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="col-span-full">
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-white"
-                      >
-                        Post Content
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          value={postContent}
-                          onChange={(e) => setPostContent(e.target.value)}
-                          id="about"
-                          name="about"
-                          rows={3}
-                          className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                      <p className="mt-3 text-sm leading-6 text-gray-400">
-                        Write a few sentences about your post
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button
-                  onClick={() => setIsnewpostOpen(false)}
-                  className="text-sm font-semibold leading-6 text-white"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={savePost}
-                  className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                >
-                  Save
-                </button>
-              </div>
-            </form>
-          </Modal>
+          {newPost(
+            isnewpostOpen,
+            setIsnewpostOpen,
+            postTitle,
+            setPostTitle,
+            postCategory,
+            setPostCategory,
+            categories,
+            postContent,
+            setPostContent,
+            savePost
+          )}
 
           {/* Sticky search header */}
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 shadow-sm sm:px-6 lg:px-8">
@@ -545,5 +420,166 @@ export default function Example() {
         </div>
       </Shell>
     </>
+  );
+}
+
+function newPost(
+  isnewpostOpen: boolean,
+  setIsnewpostOpen,
+  postTitle: string,
+  setPostTitle,
+  postCategory: Categories,
+  setPostCategory,
+  categories: { id: number; name: Categories; value: boolean }[],
+  postContent: string,
+  setPostContent,
+  savePost: () => void
+) {
+  return (
+    <Modal open={isnewpostOpen} setOpen={setIsnewpostOpen}>
+      <form className="mx-20 my-10" onSubmit={(e) => e.preventDefault()}>
+        <div className="space-y-12">
+          <div className="border-b border-white/10 pb-12">
+            <h2 className="text-base font-semibold leading-7 text-white">
+              New Post
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-gray-400">
+              This information will be displayed publicly so be careful what you
+              share.
+            </p>
+
+            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium leading-6 text-white"
+                >
+                  Post Title
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+                    {/* <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
+          workcation.com/
+        </span> */}
+                    <input
+                      value={postTitle}
+                      onChange={(e) => setPostTitle(e.target.value)}
+                      type="text"
+                      name="username"
+                      id="username"
+                      className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="My First Post"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="country"
+                  className="block text-sm font-medium leading-6 text-white"
+                >
+                  Country
+                </label>
+                <div className="mt-2">
+                  <select
+                    value={postCategory}
+                    onChange={(e) =>
+                      setPostCategory(e.target.value as Categories)
+                    }
+                    id="country"
+                    name="country"
+                    autoComplete="country-name"
+                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black"
+                  >
+                    {categories.map((category, index) => (
+                      <option key={index}>{category.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="col-span-full">
+                <label
+                  htmlFor="about"
+                  className="block text-sm font-medium leading-6 text-white"
+                >
+                  Post Content
+                </label>
+                <div className="mt-2">
+                  <textarea
+                    value={postContent}
+                    onChange={(e) => setPostContent(e.target.value)}
+                    id="about"
+                    name="about"
+                    rows={3}
+                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  />
+                </div>
+                <p className="mt-3 text-sm leading-6 text-gray-400">
+                  Write a few sentences about your post
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <button
+            onClick={() => setIsnewpostOpen(false)}
+            className="text-sm font-semibold leading-6 text-white"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={savePost}
+            className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </Modal>
+  );
+}
+
+function categoryFilter(
+  isOpen: boolean,
+  setIsOpen,
+  categories: { id: number; name: Categories; value: boolean }[],
+  tick: (id: number) => void
+) {
+  return (
+    <Modal open={isOpen} setOpen={setIsOpen}>
+      <fieldset className="m-8">
+        <legend className="text-base font-semibold leading-6 text-white">
+          Topics
+        </legend>
+        <div className="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
+          {categories.map((person, personIdx) => (
+            <div key={personIdx} className="relative flex items-start py-4">
+              <div className="min-w-0 flex-1 text-sm leading-6">
+                <label
+                  htmlFor={`person-${person.id}`}
+                  className="select-none font-medium text-white"
+                >
+                  {person.name}
+                </label>
+              </div>
+              <div className="ml-3 flex h-6 items-center">
+                <input
+                  id={`person-${person.id}`}
+                  name={`person-${person.id}`}
+                  checked={person.value}
+                  onClick={() => tick(person.id)}
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </fieldset>
+    </Modal>
   );
 }
