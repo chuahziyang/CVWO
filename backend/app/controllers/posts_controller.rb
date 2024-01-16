@@ -16,4 +16,15 @@ class PostsController < ApplicationController
       post = Post.create(name:params[:name], category:params[:category], status:params[:status], description:params[:description], created_at: DateTime.now, environment:params[:environment], content:params[:content], user_id:@current_user.id)
       render json: post.to_json(include: [:user, :comments])
    end
+
+   def destroy
+      post = Post.find(params[:id])
+
+      if post.user_id == @current_user.id
+         post.destroy
+         render json: { message: "Post deleted successfully" }
+      else
+         render json: { error: "You are not authorized to delete this post" }, status: :unauthorized
+      end
+   end
 end

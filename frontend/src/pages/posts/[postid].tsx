@@ -99,6 +99,7 @@ export default function Example() {
               author={query.data.user.name}
               authorid={query.data.user.id}
               title={query.data.name}
+              postid={query.data.id}
             ></Postarea>
             <Comment
               postid={parseInt(postid)}

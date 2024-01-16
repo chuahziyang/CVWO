@@ -2,6 +2,31 @@ import { Categories, Post } from "../types/posts";
 import { axios } from "./axios";
 import { getComments } from "./comments";
 
+export const deletePostauth = ({
+  id,
+  token,
+}: {
+  id: number;
+  token: string;
+}) => {
+  console.log(token);
+  console.log(`/posts/${id}`);
+  return axios
+    .delete(`/posts/${id}`, {
+      headers: {
+        Authorization: "bearer " + token,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
+};
+
 export const newPostAuth = ({
   name,
   content,

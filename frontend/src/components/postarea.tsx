@@ -7,6 +7,11 @@ import {
   TrashIcon,
 } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
+//@ts-ignore
+import { useMutation } from "@tanstack/react-query";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { deletePostauth } from "../server/posts";
 import { images } from "../types/imagedata";
 import { Categories } from "../types/posts";
 //@ts-ignore
@@ -21,6 +26,7 @@ export default function Example({
   authorid,
   category,
   title,
+  postid,
 }: {
   content: string;
   author: string;
@@ -28,7 +34,32 @@ export default function Example({
   authorid: number;
   title: string;
   category: Categories;
+  postid: number;
 }) {
+  const [cookie] = useCookies(["token"]);
+
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationKey: ["deletepost"],
+    mutationFn: deletePostauth,
+  });
+
+  console.log(postid);
+  const deletepost = () => {
+    console.log("asdasd");
+    mutation.mutate(
+      {
+        id: postid,
+        token: cookie.token,
+      },
+      {
+        onSuccess: () => {
+          navigate("/");
+        },
+      }
+    );
+  };
+
   return (
     <>
       <div className="px-8 mt-6">
@@ -183,8 +214,8 @@ export default function Example({
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <button
+                          onClick={deletepost}
                           className={classNames(
                             active
                               ? "bg-gray-100 text-gray-900"
@@ -197,7 +228,7 @@ export default function Example({
                             aria-hidden="true"
                           />
                           <span>Delete Post</span>
-                        </a>
+                        </button>
                       )}
                     </Menu.Item>
                   </div>
