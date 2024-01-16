@@ -90,6 +90,9 @@ export default function Example() {
     }))
   );
 
+  const [validtitle, setValidtitle] = useState(false);
+  const [validcontent, setValidcontent] = useState(false);
+
   const tick = (id: number) => {
     setCategories(
       categories.map((category) =>
@@ -100,6 +103,19 @@ export default function Example() {
 
   function savePost() {
     console.log(postTitle, postContent, postCategory);
+
+    setValidtitle(false);
+    setValidcontent(false);
+    if (postTitle === "") {
+      setValidtitle(true);
+      return;
+    }
+
+    if (postContent === "") {
+      setValidcontent(true);
+      return;
+    }
+
     newpost.mutate({
       name: postTitle,
       content: postContent,
@@ -204,6 +220,14 @@ export default function Example() {
                           />
                         </div>
                       </div>
+                      {validtitle && (
+                        <p
+                          className="mt-2 text-sm text-red-600"
+                          id="email-error"
+                        >
+                          Title cannot be empty
+                        </p>
+                      )}
                     </div>
 
                     <div className="sm:col-span-3">
@@ -248,6 +272,14 @@ export default function Example() {
                           className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                         />
                       </div>
+                      {validcontent && (
+                        <p
+                          className="mt-2 text-sm text-red-600"
+                          id="email-error"
+                        >
+                          Not a valid email address.
+                        </p>
+                      )}
                       <p className="mt-3 text-sm leading-6 text-gray-400">
                         Write a few sentences about your post
                       </p>
