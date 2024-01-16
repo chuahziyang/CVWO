@@ -27,4 +27,15 @@ class PostsController < ApplicationController
          render json: { error: "You are not authorized to delete this post" }, status: :unauthorized
       end
    end
+
+   def update
+      post = Post.find(params[:id])
+
+      if post.user_id == @current_user.id
+         post.update(environment:"Closed")
+         render json: post.to_json(include: [:user, :comments])
+      else
+         render json: { error: "You are not authorized to update this post" }, status: :unauthorized
+      end
+   end
 end

@@ -12,7 +12,7 @@ import { Fragment, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { deletePostauth } from "../server/posts";
+import { archivePostauth, deletePostauth } from "../server/posts";
 import { images } from "../types/imagedata";
 import { Categories } from "../types/posts";
 //@ts-ignore
@@ -38,11 +38,24 @@ export default function Example({
   postid: number;
 }) {
   const [cookie] = useCookies(["token"]);
+  console.log(cookie.token);
 
   const navigate = useNavigate();
   const mutation = useMutation({
     mutationKey: ["deletepost"],
     mutationFn: deletePostauth,
+    onSuccess: () => {
+      navigate("/");
+    },
+    onError: (error) => {
+      console.log(error);
+      setiserror(true);
+    },
+  });
+
+  const archivemutation = useMutation({
+    mutationKey: ["archivepost"],
+    mutationFn: archivePostauth,
     onSuccess: () => {
       navigate("/");
     },
@@ -60,6 +73,16 @@ export default function Example({
       token: cookie.token,
     });
   };
+
+  const archivepost = () => {
+    console.log(postid);
+    console.log(cookie.token);
+    archivemutation.mutate({
+      id: postid,
+      token: cookie.token,
+    });
+  };
+
   const [iserror, setiserror] = useState(false);
 
   return (
@@ -226,8 +249,8 @@ export default function Example({
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <button
+                          onClick={archivepost}
                           className={classNames(
                             active
                               ? "bg-gray-100 text-gray-900"
@@ -240,7 +263,7 @@ export default function Example({
                             aria-hidden="true"
                           />
                           <span>Archive Post</span>
-                        </a>
+                        </button>
                       )}
                     </Menu.Item>
                     <Menu.Item>
