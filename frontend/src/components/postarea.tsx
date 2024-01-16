@@ -50,7 +50,7 @@ export default function Example({
               <li>
                 <div className="flex">
                   <a
-                    href="#"
+                    href="/"
                     className="text-sm font-medium text-gray-400 hover:text-gray-200"
                   >
                     Posts
@@ -64,7 +64,7 @@ export default function Example({
                     aria-hidden="true"
                   />
                   <a
-                    href="#"
+                    href="/"
                     className="ml-4 text-sm font-medium text-gray-400 hover:text-gray-200"
                   >
                     {category}
@@ -125,11 +125,6 @@ export default function Example({
               <span className="truncate">
                 {author}
                 {`  `}
-              </span>
-              <span className="text-gray-400">/</span>
-              <span className="whitespace-nowrap">
-                {`  `}
-                {category}
               </span>
             </p>
             <p className="text-sm text-gray-500">
