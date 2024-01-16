@@ -98,6 +98,7 @@ export default function Example() {
               date={query.data.created_at}
               author={query.data.user.name}
               authorid={query.data.user.id}
+              title={query.data.name}
             ></Postarea>
             <Comment
               postid={parseInt(postid)}
