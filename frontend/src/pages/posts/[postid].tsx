@@ -24,10 +24,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Comment from "../../components/comments";
+import Notfound from "../../components/notfound";
 import Postarea from "../../components/postarea";
 import Shell from "../../components/shell";
 import { getPost } from "../../server/posts";
-
 const moods = [
   {
     name: "Excited",
@@ -90,23 +90,22 @@ export default function Example() {
   return (
     <>
       <Shell isOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}>
-        <div>
-          {query.isSuccess && (
-            <>
-              <Postarea
-                category={query.data.category}
-                content={query.data.content}
-                date={query.data.created_at}
-                author={query.data.user.name}
-                authorid={query.data.user.id}
-              ></Postarea>
-              <Comment
-                postid={parseInt(postid)}
-                comments={query.data.comments}
-              ></Comment>
-            </>
-          )}
-        </div>
+        {query.isSuccess && (
+          <>
+            <Postarea
+              category={query.data.category}
+              content={query.data.content}
+              date={query.data.created_at}
+              author={query.data.user.name}
+              authorid={query.data.user.id}
+            ></Postarea>
+            <Comment
+              postid={parseInt(postid)}
+              comments={query.data.comments}
+            ></Comment>
+          </>
+        )}
+        {query.isError && <Notfound></Notfound>}
       </Shell>
     </>
   );
