@@ -5,8 +5,9 @@ import {
   ChevronRightIcon,
   EllipsisVerticalIcon,
   TrashIcon,
+  XMarkIcon,
 } from "@heroicons/react/20/solid";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 //@ts-ignore
 import { useMutation } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
@@ -42,26 +43,55 @@ export default function Example({
   const mutation = useMutation({
     mutationKey: ["deletepost"],
     mutationFn: deletePostauth,
+    onSuccess: () => {
+      navigate("/");
+    },
+    onError: (error) => {
+      console.log(error);
+      setiserror(true);
+    },
   });
 
   console.log(postid);
   const deletepost = () => {
     console.log("asdasd");
-    mutation.mutate(
-      {
-        id: postid,
-        token: cookie.token,
-      },
-      {
-        onSuccess: () => {
-          navigate("/");
-        },
-      }
-    );
+    mutation.mutate({
+      id: postid,
+      token: cookie.token,
+    });
   };
+  const [iserror, setiserror] = useState(false);
 
   return (
     <>
+      {iserror && (
+        <div className="rounded-md bg-red-50 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              {/* <CheckCircleIcon
+              className="h-5 w-5 text-green-400"
+              aria-hidden="true"
+            /> */}
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-red-800">
+                Error: Unauthorized, this is not your post!
+              </p>
+            </div>
+            <div className="ml-auto pl-3">
+              <div className="-mx-1.5 -my-1.5">
+                <button
+                  type="button"
+                  className="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
+                >
+                  <span className="sr-only">Dismiss</span>
+                  <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="px-8 mt-6">
         <div>
           <nav className="sm:hidden" aria-label="Back">
