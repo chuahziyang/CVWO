@@ -121,6 +121,7 @@ export default function Example() {
     onSuccess: (data) => {
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["activity"] });
       setIsnewpostOpen(false);
     },
   });

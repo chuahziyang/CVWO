@@ -144,8 +144,7 @@ export const getActivity = async () => {
     .concat(finalprocessedPosts)
     .sort((a, b) => {
       return b.date.getTime() - a.date.getTime();
-    })
-    .slice(0, 8);
+    });
 
   return all;
   // return [
