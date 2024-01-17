@@ -521,53 +521,55 @@ export default function Example() {
               </header>
               <ul role="list" className="divide-y divide-white/5">
                 {activity.data.map((item) => (
-                  <li key={item.id} className="px-4 py-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center gap-x-3">
-                      <img
-                        src={item.imageUrl}
-                        alt=""
-                        className="h-6 w-6 flex-none rounded-full bg-gray-800"
-                      />
-                      <h3 className="flex-auto truncate text-sm font-semibold leading-6 text-white">
-                        {item.name}
-                      </h3>
-                      <time className="flex-none text-xs text-gray-600">
-                        {moment(item.date).fromNow()}
-                      </time>
-                    </div>
-                    {item.type === "comment" ? (
-                      <p className="mt-3 truncate text-sm text-gray-500">
-                        Comment in{" "}
-                        <span className="truncate">
-                          {item.title}
-                          {`  `}
-                        </span>
-                        <span className="text-gray-400">/</span>
-                        <span className="whitespace-nowrap">
-                          {`  `}
-                          {item.category}
-                        </span>
-                      </p>
-                    ) : (
-                      <p className="mt-3 truncate text-sm text-gray-500">
-                        New post{" "}
-                        <span className="truncate">
-                          {item.title}
-                          {`  `}
-                        </span>
-                        in{" "}
-                        <span className="truncate">
-                          {item.category}
-                          {`  `}
-                        </span>
-                        {/* <span className="text-gray-400">/</span>
-                        <span className="whitespace-nowrap">
-                          {`  `}
-                          {item.category}
-                        </span> */}
-                      </p>
-                    )}
-                  </li>
+                  <a href={`/posts/${item.id}`}>
+                    <li key={item.id} className="px-4 py-4 sm:px-6 lg:px-8">
+                      <div className="flex items-center gap-x-3">
+                        <img
+                          src={item.imageUrl}
+                          alt=""
+                          className="h-6 w-6 flex-none rounded-full bg-gray-800"
+                        />
+                        <h3 className="flex-auto truncate text-sm font-semibold leading-6 text-white">
+                          {item.name}
+                        </h3>
+                        <time className="flex-none text-xs text-gray-600">
+                          {moment(item.date).fromNow()}
+                        </time>
+                      </div>
+                      {item.type === "comment" ? (
+                        <p className="mt-3 truncate text-sm text-gray-500">
+                          Comment in{" "}
+                          <span className="truncate">
+                            {item.title}
+                            {`  `}
+                          </span>
+                          <span className="text-gray-400">/</span>
+                          <span className="whitespace-nowrap">
+                            {`  `}
+                            {item.category}
+                          </span>
+                        </p>
+                      ) : (
+                        <p className="mt-3 truncate text-sm text-gray-500">
+                          New post{" "}
+                          <span className="truncate">
+                            {item.title}
+                            {`  `}
+                          </span>
+                          in{" "}
+                          <span className="truncate">
+                            {item.category}
+                            {`  `}
+                          </span>
+                          {/* <span className="text-gray-400">/</span>
+                          <span className="whitespace-nowrap">
+                            {`  `}
+                            {item.category}
+                          </span> */}
+                        </p>
+                      )}
+                    </li>
+                  </a>
                 ))}
               </ul>
             </aside>
