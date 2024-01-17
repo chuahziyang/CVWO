@@ -1,7 +1,7 @@
-import { Categories, Post } from "../types/posts";
+import { images } from "../types/imagedata";
+import { Categories, Comment, Post } from "../types/posts";
 import { axios } from "./axios";
 import { getComments } from "./comments";
-
 export const archivePostauth = ({
   id,
   token,
@@ -106,6 +106,56 @@ export const getActivity = async () => {
 
   console.log(posts);
   console.log(comments);
+
+  const processedComments: Comment[] = comments.map((comment: any) => {
+    return {
+      ...comment,
+      created_at: new Date(comment.created_at),
+      updated_at: new Date(comment.updated_at),
+    };
+  });
+  const processedPosts: Post[] = posts.map((post) => processPost(post));
+
+  const finalprocessedComments = processedComments.map((comment: Comment) => {
+    return {
+      name: comment.user.name,
+      imageUrl: images[comment.user.id],
+      category: "SHIT",
+      date: comment.created_at,
+      id: comment.id,
+      type: "comment",
+    };
+  });
+
+  const finalprocessedPosts = processedPosts.map((post: Post) => {
+    return {
+      name: post.user.name,
+      imageUrl: images[post.user.id],
+      category: post.category,
+      date: post.created_at,
+      id: post.id,
+      type: "post",
+    };
+  });
+
+  const all = finalprocessedComments
+    .concat(finalprocessedPosts)
+    .sort((a, b) => {
+      return b.date.getTime() - a.date.getTime();
+    })
+    .slice(0, 8);
+
+  return all;
+  // return [
+  //   {
+  //     name: "Chuah Zi Yang",
+  //     imageUrl:
+  //       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  //     category: "General",
+  //     date: "1h",
+  //     id: 1,
+  //   },
+  // ];
 };
 
 export const getPost = (id: string) => {

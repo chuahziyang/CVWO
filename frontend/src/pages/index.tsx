@@ -1,18 +1,3 @@
-/*
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-
 import {
   Bars3Icon,
   ChevronRightIcon,
@@ -20,13 +5,14 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import moment from "moment";
 import { useState } from "react";
 //@ts-ignore
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../components/modal";
 import Shell from "../components/shell";
-import { getPosts, newPostAuth } from "../server/posts";
+import { getActivity, getPosts, newPostAuth } from "../server/posts";
 import { Categories } from "../types/posts";
 
 const statuses = {
@@ -38,21 +24,6 @@ const environments = {
   Active: "text-gray-400 bg-gray-400/10 ring-gray-400/20",
   Closed: "text-indigo-400 bg-indigo-400/10 ring-indigo-400/30",
 };
-
-const activityItems = [
-  {
-    user: {
-      name: "Chuah Zi Yang",
-      imageUrl:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    category: "General",
-    name: "WWWW",
-    date: "1h",
-    id: 1,
-  },
-  // More items...
-];
 
 //@ts-ignore
 function classNames(...classes) {
@@ -100,6 +71,11 @@ export default function Example() {
       )
     );
   };
+
+  const activity = useQuery({
+    queryKey: ["activity"],
+    queryFn: getActivity,
+  });
 
   function savePost() {
     console.log(postTitle, postContent, postCategory);
@@ -495,7 +471,7 @@ export default function Example() {
                             </h2>
                           </div>
                           <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
-                            <p className="truncate">{post.user.name}</p>
+                            <p className="truncate">{post.name}</p>
                             <svg
                               viewBox="0 0 2 2"
                               className="h-0.5 w-0.5 flex-none fill-gray-300"
@@ -530,50 +506,67 @@ export default function Example() {
           </main>
 
           {/* Activity feed */}
-          <aside className="bg-black/10 lg:fixed lg:bottom-0 lg:right-0 lg:top-16 lg:w-96 lg:overflow-y-auto lg:border-l lg:border-white/5">
-            <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
-              <h2 className="text-base font-semibold leading-7 text-white">
-                Activity feed
-              </h2>
-              {/* <a
+          {activity.isSuccess && (
+            <aside className="bg-black/10 lg:fixed lg:bottom-0 lg:right-0 lg:top-16 lg:w-96 lg:overflow-y-auto lg:border-l lg:border-white/5">
+              <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+                <h2 className="text-base font-semibold leading-7 text-white">
+                  Activity feed
+                </h2>
+                {/* <a
                 href="#"
                 className="text-sm font-semibold leading-6 text-indigo-400"
               >
                 View all
               </a> */}
-            </header>
-            <ul role="list" className="divide-y divide-white/5">
-              {activityItems.map((item) => (
-                <li key={item.id} className="px-4 py-4 sm:px-6 lg:px-8">
-                  <div className="flex items-center gap-x-3">
-                    <img
-                      src={item.user.imageUrl}
-                      alt=""
-                      className="h-6 w-6 flex-none rounded-full bg-gray-800"
-                    />
-                    <h3 className="flex-auto truncate text-sm font-semibold leading-6 text-white">
-                      {item.user.name}
-                    </h3>
-                    <time className="flex-none text-xs text-gray-600">
-                      {item.date}
-                    </time>
-                  </div>
-                  <p className="mt-3 truncate text-sm text-gray-500">
-                    New Comment to{" "}
-                    <span className="truncate">
-                      {item.name}
-                      {`  `}
-                    </span>
-                    <span className="text-gray-400">/</span>
-                    <span className="whitespace-nowrap">
-                      {`  `}
-                      {item.category}
-                    </span>
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </aside>
+              </header>
+              <ul role="list" className="divide-y divide-white/5">
+                {activity.data.map((item) => (
+                  <li key={item.id} className="px-4 py-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center gap-x-3">
+                      <img
+                        src={item.imageUrl}
+                        alt=""
+                        className="h-6 w-6 flex-none rounded-full bg-gray-800"
+                      />
+                      <h3 className="flex-auto truncate text-sm font-semibold leading-6 text-white">
+                        {item.name}
+                      </h3>
+                      <time className="flex-none text-xs text-gray-600">
+                        {moment(item.date).fromNow()}
+                      </time>
+                    </div>
+                    {item.type === "comment" ? (
+                      <p className="mt-3 truncate text-sm text-gray-500">
+                        Comment in{" "}
+                        <span className="truncate">
+                          {item.name}
+                          {`  `}
+                        </span>
+                        <span className="text-gray-400">/</span>
+                        <span className="whitespace-nowrap">
+                          {`  `}
+                          {item.category}
+                        </span>
+                      </p>
+                    ) : (
+                      <p className="mt-3 truncate text-sm text-gray-500">
+                        Post in{" "}
+                        <span className="truncate">
+                          {item.category}
+                          {`  `}
+                        </span>
+                        {/* <span className="text-gray-400">/</span>
+                        <span className="whitespace-nowrap">
+                          {`  `}
+                          {item.category}
+                        </span> */}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          )}
         </div>
       </Shell>
     </>
