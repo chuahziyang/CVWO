@@ -21,7 +21,7 @@ const statuses = {
   error: "text-rose-400 bg-rose-400/10",
 };
 const environments = {
-  Active: "text-gray-400 bg-gray-400/10 ring-gray-400/20",
+  Active: "text-green-300 bg-green-400/10 ring-green-400/30",
   Closed: "text-indigo-400 bg-indigo-400/10 ring-indigo-400/30",
 };
 
