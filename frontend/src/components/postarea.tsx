@@ -120,7 +120,7 @@ export default function Example({
         <div>
           <nav className="sm:hidden" aria-label="Back">
             <a
-              href="#"
+              href="/"
               className="flex items-center text-sm font-medium text-gray-400 hover:text-gray-200"
             >
               <ChevronLeftIcon
