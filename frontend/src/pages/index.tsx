@@ -524,10 +524,13 @@ export default function Example() {
                 View all
               </a> */}
               </header>
-              <ul role="list" className="divide-y divide-white/5">
+              <ul role="list" className="divide-y divide-white/5 ">
                 {activity.data.map((item) => (
                   <a href={`/posts/${item.id}`}>
-                    <li key={item.id} className="px-4 py-4 sm:px-6 lg:px-8">
+                    <li
+                      key={item.id}
+                      className="px-4 py-4 sm:px-6 lg:px-8 hover:bg-gray-800"
+                    >
                       <div className="flex items-center gap-x-3">
                         <img
                           src={item.imageUrl}
