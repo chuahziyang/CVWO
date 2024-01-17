@@ -53,6 +53,7 @@ export default function Example() {
   const [isOpen, setIsOpen] = useState(false);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const [categories, setCategories] = useState(
     Object.values(Categories).map((category, index) => ({
       id: index + 1,
@@ -60,6 +61,10 @@ export default function Example() {
       value: true,
     }))
   );
+
+  // const [searchParams] = useSearchParams();
+
+  // console.log(searchParams.get("category"));
 
   const [validtitle, setValidtitle] = useState(false);
   const [validcontent, setValidcontent] = useState(false);
