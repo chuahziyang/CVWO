@@ -120,10 +120,11 @@ export const getActivity = async () => {
     return {
       name: comment.user.name,
       imageUrl: images[comment.user.id],
-      category: "SHIT",
+      category: comment.post.category,
       date: comment.created_at,
-      id: comment.id,
+      id: comment.post.id,
       type: "comment",
+      title: comment.post.name,
     };
   });
 
@@ -135,6 +136,7 @@ export const getActivity = async () => {
       date: post.created_at,
       id: post.id,
       type: "post",
+      title: post.name,
     };
   });
 

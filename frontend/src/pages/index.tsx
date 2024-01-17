@@ -539,7 +539,7 @@ export default function Example() {
                       <p className="mt-3 truncate text-sm text-gray-500">
                         Comment in{" "}
                         <span className="truncate">
-                          {item.name}
+                          {item.title}
                           {`  `}
                         </span>
                         <span className="text-gray-400">/</span>
@@ -550,7 +550,12 @@ export default function Example() {
                       </p>
                     ) : (
                       <p className="mt-3 truncate text-sm text-gray-500">
-                        Post in{" "}
+                        New post{" "}
+                        <span className="truncate">
+                          {item.title}
+                          {`  `}
+                        </span>
+                        in{" "}
                         <span className="truncate">
                           {item.category}
                           {`  `}
