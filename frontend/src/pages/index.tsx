@@ -64,7 +64,7 @@ export default function Example() {
 
   // const [searchParams] = useSearchParams();
 
-  // console.log(searchParams.get("category"));
+  // const categorysearch = searchParams.get("category");
 
   const [validtitle, setValidtitle] = useState(false);
   const [validcontent, setValidcontent] = useState(false);
