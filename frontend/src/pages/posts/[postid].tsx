@@ -14,12 +14,14 @@
 */
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Comment from "../../components/comments";
 import Notfound from "../../components/notfound";
 import Postarea from "../../components/postarea";
 import Shell from "../../components/shell";
 import { getPost } from "../../server/posts";
+//@ts-ignore
+import { useCookies } from "react-cookie";
 //@ts-ignore
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -30,6 +32,12 @@ export default function Example() {
 
   const { postid } = useParams() as { postid: string };
 
+  const [cookies] = useCookies(["name"]);
+  const navigate = useNavigate();
+
+  if (!cookies.token) {
+    navigate("/login");
+  }
   const query = useQuery({
     queryKey: ["post"],
     queryFn: getPost(postid),
