@@ -2,6 +2,7 @@ import { XCircleIcon } from "@heroicons/react/20/solid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { useState } from "react";
+//@ts-ignore
 import { useCookies } from "react-cookie";
 import { newCommentauth } from "../server/comments";
 import { images } from "../types/imagedata";
@@ -24,9 +25,7 @@ const commentBlock = (comments: Comment[]) => {
                   {comment.user.name}
                 </p>
                 <p className="text-xs text-gray-600 dark:text-gray-400">
-                  <time pubdate datetime="2022-03-12" title="March 12th, 2022">
-                    {moment(comment.created_at).fromNow()}
-                  </time>
+                  <time>{moment(comment.created_at).fromNow()}</time>
                 </p>
               </div>
               <button

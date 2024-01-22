@@ -115,18 +115,20 @@ export const getActivity = async () => {
     };
   });
   const processedPosts: Post[] = posts.map((post) => processPost(post));
-
-  const finalprocessedComments = processedComments.map((comment: Comment) => {
-    return {
-      name: comment.user.name,
-      imageUrl: images[comment.user.id],
-      category: comment.post.category,
-      date: comment.created_at,
-      id: comment.post.id,
-      type: "comment",
-      title: comment.post.name,
-    };
-  });
+  const finalprocessedComments = processedComments.map(
+    //@ts-ignore
+    (comment: Comment & { post: Post }) => {
+      return {
+        name: comment.user.name,
+        imageUrl: images[comment.user.id],
+        category: comment.post.category,
+        date: comment.created_at,
+        id: comment.post.id,
+        type: "comment",
+        title: comment.post.name,
+      };
+    }
+  );
 
   const finalprocessedPosts = processedPosts.map((post: Post) => {
     return {
