@@ -10,6 +10,7 @@ import {
 import { Fragment, useState } from "react";
 //@ts-ignore
 import { useMutation } from "@tanstack/react-query";
+//@ts-ignore
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { archivePostauth, deletePostauth } from "../server/posts";
