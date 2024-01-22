@@ -17,6 +17,7 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
+
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
@@ -29,6 +30,9 @@ RUN bundle install && \
 
 # Copy application code
 COPY . .
+
+#asdasd
+RUN chmod +x bin/*
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
