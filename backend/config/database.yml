@@ -18,8 +18,8 @@ default: &default
   database: railway
   username: postgres
   password: aC2C3c4gC5F4Ccbaade1Ed43dg3GE3cC
-  host : monorail.proxy.rlwy.net
-  port : 34751
+  host: monorail.proxy.rlwy.net
+  port: 34751
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -84,6 +84,3 @@ test:
 #
 production:
   <<: *default
-  database: backend_production
-  username: backend
-  password: <%= ENV["BACKEND_DATABASE_PASSWORD"] %>
