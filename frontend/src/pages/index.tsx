@@ -217,7 +217,7 @@ export default function Example() {
                         htmlFor="country"
                         className="block text-sm font-medium leading-6 text-white"
                       >
-                        Country
+                        Category
                       </label>
                       <div className="mt-2">
                         <select
@@ -259,7 +259,7 @@ export default function Example() {
                           className="mt-2 text-sm text-red-600"
                           id="email-error"
                         >
-                          Not a valid email address.
+                          Content cannot be empty
                         </p>
                       )}
                       <p className="mt-3 text-sm leading-6 text-gray-400">
