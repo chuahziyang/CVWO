@@ -119,7 +119,7 @@ function newFunction(background: boolean) {
       <div className="flex h-16 shrink-0 items-center">
         <img
           className="h-8 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+          src="/src/assets/logo.png"
           alt="Your Company"
         />
       </div>
