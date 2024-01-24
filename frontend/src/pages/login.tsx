@@ -21,8 +21,8 @@ import { login } from "../server/auth";
 
 export default function Example() {
   const [cookies, setCookie] = useCookies(["name"]);
-  const [email, setEmail] = useState("czyang2002@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
