@@ -4,13 +4,16 @@ import {
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { useState } from "react";
 //@ts-ignore
+
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../components/modal";
+
 import Shell from "../components/shell";
 import { getActivity, getPosts, newPostAuth } from "../server/posts";
 import { Categories } from "../types/posts";
