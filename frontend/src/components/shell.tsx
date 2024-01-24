@@ -117,7 +117,7 @@ function newFunction(background: boolean) {
       }
     >
       <div className="flex h-16 shrink-0 items-center">
-        <img className="h-8 w-auto" src="logo.png" alt="Your Company" />
+        <img className="h-8 w-auto" src="/logo.png" alt="Your Company" />
       </div>
       <nav className="flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
