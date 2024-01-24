@@ -22,6 +22,10 @@ export default function Example() {
   const [password, setPassword] = useState("");
   const [name, setname] = useState("");
 
+  const [showEmailError, setShowEmailError] = useState(false);
+  const [showPasswordError, setShowPasswordError] = useState(false);
+  const [showNameError, setShowNameError] = useState(false);
+
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -33,6 +37,27 @@ export default function Example() {
 
   const submit = () => {
     console.log(email, password, name);
+
+    if (name === "") {
+      setShowNameError(true);
+      return;
+    }
+
+    setShowNameError(false);
+    if (email === "") {
+      setShowEmailError(true);
+      return;
+    }
+
+    setShowEmailError(false);
+
+    if (password === "") {
+      setShowPasswordError(true);
+      return;
+    }
+
+    setShowPasswordError(false);
+
     mutation.mutate({ email, password, name });
   };
 
@@ -79,7 +104,7 @@ export default function Example() {
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-white"
               >
-                name
+                Name
               </label>
               <div className="mt-2">
                 <input
@@ -91,6 +116,11 @@ export default function Example() {
                   className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
               </div>
+              {showNameError && (
+                <h3 className="text-sm font-medium text-red-800">
+                  Name cannot be empty
+                </h3>
+              )}
             </div>
             <div>
               <label
@@ -109,6 +139,11 @@ export default function Example() {
                   className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
               </div>
+              {showEmailError && (
+                <h3 className="text-sm font-medium text-red-800">
+                  Email cannot be empty
+                </h3>
+              )}
             </div>
 
             <div>
@@ -132,6 +167,11 @@ export default function Example() {
                   className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 />
               </div>
+              {showPasswordError && (
+                <h3 className="text-sm font-medium text-red-800">
+                  Password cannot be empty
+                </h3>
+              )}
             </div>
 
             <div>
