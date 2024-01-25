@@ -17,9 +17,16 @@ function classNames(...classes) {
 }
 
 const commentBlock = (comments: Comment[]) => {
+  const queryClient = useQueryClient();
   const [cookie] = useCookies(["token"]);
   const deleteCommentMutation = useMutation({
     mutationFn: deleteCommentauth,
+    onSuccess: () => {
+      console.log("asdasd");
+      queryClient.invalidateQueries({
+        queryKey: ["post"],
+      });
+    },
   });
 
   const deleteComment = (id: number) => () => {
