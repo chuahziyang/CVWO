@@ -11,4 +11,17 @@ class CommentsController < ApplicationController
     comment = Comment.create(content:params[:content], user_id:@current_user.id, post_id:params[:post_id])
     render json: comment
   end
+
+
+
+   def destroy
+      comment = Comment.find(params[:id])
+
+      if comment.user_id == @current_user.id
+         comment.destroy
+         render json: { message: "Comment deleted successfully" }
+      else
+         render json: { error: "You are not authorized to delete this post" }, status: :unauthorized
+      end
+   end
 end

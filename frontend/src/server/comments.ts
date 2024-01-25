@@ -10,6 +10,29 @@ export const getComments = () => {
       });
 };
 
+export const deleteCommentauth = ({
+  id,
+  token,
+}: {
+  id: number;
+  token: string;
+}) => {
+  return axios
+    .delete(`/comments/${id}`, {
+      headers: {
+        Authorization: "bearer " + token,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
+};
+
 export const newCommentauth = ({
   content,
   post_id,
