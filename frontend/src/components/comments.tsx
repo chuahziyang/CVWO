@@ -1,5 +1,9 @@
 import { Menu, Transition } from "@headlessui/react";
-import { EllipsisHorizontalIcon, XCircleIcon } from "@heroicons/react/20/solid";
+import {
+  EllipsisHorizontalIcon,
+  PencilIcon,
+  XCircleIcon,
+} from "@heroicons/react/20/solid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 //@ts-ignore
@@ -178,7 +182,7 @@ const commentBlock = (comments: Comment[]) => {
                               "flex px-4 py-2 text-sm"
                             )}
                           >
-                            <TrashIcon
+                            <PencilIcon
                               className="mr-3 h-5 w-5 text-gray-400"
                               aria-hidden="true"
                             />
