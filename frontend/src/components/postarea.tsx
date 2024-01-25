@@ -136,7 +136,7 @@ export default function Example({
               <li>
                 <div className="flex items-center">
                   <a
-                    href="/"
+                    href={`/?category=${category}`}
                     className="ml-4 text-sm font-medium text-gray-400 hover:text-gray-200"
                   >
                     {category}

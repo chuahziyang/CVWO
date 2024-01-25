@@ -11,7 +11,7 @@ import { useState } from "react";
 //@ts-ignore
 
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Modal } from "../components/modal";
 
 import Shell from "../components/shell";
@@ -57,17 +57,25 @@ export default function Example() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [searchParams] = useSearchParams();
+  const categorysearch = searchParams.get("category");
+  console.log(categorysearch);
+
   const [categories, setCategories] = useState(
-    Object.values(Categories).map((category, index) => ({
-      id: index + 1,
-      name: category,
-      value: true,
-    }))
+    categorysearch
+      ? Object.values(Categories).map((category, index) => ({
+          id: index + 1,
+          name: category,
+          value: category === categorysearch,
+        }))
+      : Object.values(Categories).map((category, index) => ({
+          id: index + 1,
+          name: category,
+          value: true,
+        }))
   );
 
-  // const [searchParams] = useSearchParams();
-
-  // const categorysearch = searchParams.get("category");
+  console.log(categories);
 
   const [validtitle, setValidtitle] = useState(false);
   const [validcontent, setValidcontent] = useState(false);
