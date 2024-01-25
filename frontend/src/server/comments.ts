@@ -10,6 +10,37 @@ export const getComments = () => {
       });
 };
 
+export const updateCommentauth = ({
+  id,
+  token,
+  content,
+}: {
+  id: number;
+  token: string;
+  content: string;
+}) => {
+  return axios
+    .patch(
+      `/comments/${id}`,
+      {
+        content,
+      },
+      {
+        headers: {
+          Authorization: "bearer " + token,
+        },
+      }
+    )
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
+};
+
 export const deleteCommentauth = ({
   id,
   token,

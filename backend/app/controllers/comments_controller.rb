@@ -24,4 +24,16 @@ class CommentsController < ApplicationController
          render json: { error: "You are not authorized to delete this post" }, status: :unauthorized
       end
    end
+
+   def update
+      comment = Comment.find(params[:id])
+
+      if comment.user_id == @current_user.id
+         comment.update(content:params[:content])
+         render json: comment
+      else
+         render json: { error: "You are not authorized to update this post" }, status: :unauthorized
+      end
+   end
+
 end

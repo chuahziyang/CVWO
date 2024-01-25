@@ -4,12 +4,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 //@ts-ignore
 import { useCookies } from "react-cookie";
-import { deleteCommentauth, newCommentauth } from "../server/comments";
+import {
+  deleteCommentauth,
+  newCommentauth,
+  updateCommentauth,
+} from "../server/comments";
 import { images } from "../types/imagedata";
 import { Comment } from "../types/posts";
 
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { Fragment, useState } from "react";
+import { Modal } from "../components/modal";
 
 //@ts-ignore
 function classNames(...classes) {
@@ -29,14 +34,76 @@ const commentBlock = (comments: Comment[]) => {
     },
   });
 
+  const editCommentMutation = useMutation({
+    mutationFn: updateCommentauth,
+    onSuccess: () => {
+      console.log("asdasd");
+      queryClient.invalidateQueries({
+        queryKey: ["post"],
+      });
+    },
+  });
+
+  const updateComment = (id: number) => () => {
+    editCommentMutation.mutate({
+      id,
+      token: cookie.token,
+      content: changecomment,
+    });
+  };
+
   const deleteComment = (id: number) => () => {
     deleteCommentMutation.mutate({
       id,
       token: cookie.token,
     });
   };
+
+  const [changecommentOpen, setChangecommentOpen] = useState(false);
+  const [changecomment, setChangecomment] = useState("");
+  const [commentid, setCommentid] = useState(0);
   return (
     <>
+      <Modal open={changecommentOpen} setOpen={setChangecommentOpen}>
+        <form className="m-20">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
+              Edit Your Comment
+            </h2>
+          </div>
+          <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <label htmlFor="comment" className="sr-only">
+              Your comment
+            </label>
+            <textarea
+              value={changecomment}
+              onChange={(e) => {
+                setChangecomment(e.target.value);
+              }}
+              id="comment"
+              rows={6}
+              className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+              placeholder="Write a comment..."
+              required
+            ></textarea>
+          </div>
+          {/* {showError && ErrorMessage()} */}
+          <button
+            onClick={(e) => {
+              console.log("asdasd");
+              e.preventDefault();
+              updateComment(commentid)();
+              setChangecommentOpen(false);
+              queryClient.invalidateQueries({
+                queryKey: ["post"],
+              });
+            }}
+            className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+          >
+            Post comment
+          </button>
+        </form>
+      </Modal>
       {comments.map((comment) => {
         return (
           <article className="p-6 mb-3 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
@@ -91,6 +158,31 @@ const commentBlock = (comments: Comment[]) => {
                               aria-hidden="true"
                             />
                             <span>Delete Comment</span>
+                          </button>
+                        )}
+                      </Menu.Item>
+                    </div>
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <button
+                            onClick={() => {
+                              setChangecommentOpen(true);
+                              setChangecomment(comment.content);
+                              setCommentid(comment.id);
+                            }}
+                            className={classNames(
+                              active
+                                ? "bg-gray-100 text-gray-900"
+                                : "text-gray-700",
+                              "flex px-4 py-2 text-sm"
+                            )}
+                          >
+                            <TrashIcon
+                              className="mr-3 h-5 w-5 text-gray-400"
+                              aria-hidden="true"
+                            />
+                            <span>Edit Comment</span>
                           </button>
                         )}
                       </Menu.Item>
