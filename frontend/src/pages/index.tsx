@@ -389,7 +389,11 @@ export default function Example() {
                           <div className="flex items-center gap-x-3">
                             <div
                               className={classNames(
-                                statuses[post.status],
+                                statuses[
+                                  post.environment === "Active"
+                                    ? "online"
+                                    : "error"
+                                ],
                                 "flex-none rounded-full p-1"
                               )}
                             >
